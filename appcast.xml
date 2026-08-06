@@ -1,0 +1,9 @@
+<?xml version="1.0" standalone="yes"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+  <channel>
+    <title>Device Performance Monitor</title>
+    <link>https://dpm.coursion.studio/appcast.xml</link>
+    <description>Updates for Device Performance Monitor — live memory, CPU, thread and frame-rate monitoring from Coursion.</description>
+    <language>en</language>
+  </channel>
+</rss>
