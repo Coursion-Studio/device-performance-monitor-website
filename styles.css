@@ -1,0 +1,809 @@
+/* ─── Knack landing — theme mirrors Sources/Knack/Theme.swift ─── */
+
+:root {
+  --bg-top:    #0E1224;
+  --bg-mid:    #131530;
+  --bg-bottom: #170F31;
+
+  --text-primary:   #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.58);
+  --text-tertiary:  rgba(255, 255, 255, 0.38);
+
+  --card-fill:        rgba(255, 255, 255, 0.04);
+  --card-fill-strong: rgba(255, 255, 255, 0.06);
+  --card-stroke:      rgba(255, 255, 255, 0.09);
+
+  --brand-pink:   #FF5189;
+  --brand-purple: #C75CEB;
+  --brand-blue:   #389EFF;
+
+  --brand-gradient:
+    linear-gradient(90deg, var(--brand-pink), var(--brand-purple), var(--brand-blue));
+  --brand-gradient-diag:
+    linear-gradient(135deg, var(--brand-pink), var(--brand-purple), var(--brand-blue));
+  --brand-soft:
+    linear-gradient(90deg, rgba(255, 82, 140, 0.22), rgba(56, 158, 255, 0.22));
+
+  --radius-card: 14px;
+  --radius-btn:  12px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-top);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+               "Inter", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── background: gradient + soft colored blooms ─── */
+
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 5% 0%,
+      rgba(140, 77, 242, 0.22), transparent 52%),
+    radial-gradient(circle at 100% 100%,
+      rgba(255, 77, 140, 0.18), transparent 56%),
+    radial-gradient(circle at 100% 20%,
+      rgba(51, 141, 255, 0.12), transparent 46%),
+    linear-gradient(135deg,
+      var(--bg-top) 0%, var(--bg-mid) 50%, var(--bg-bottom) 100%);
+}
+
+/* ─── layout ─── */
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+nav.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 0 8px;
+}
+
+nav.top .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+nav.top .brand img {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+}
+
+nav.top .links {
+  display: flex;
+  gap: 22px;
+}
+
+nav.top a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+nav.top a:hover { color: var(--text-primary); }
+
+/* ─── hero ─── */
+
+.hero {
+  text-align: center;
+  padding: 72px 0 40px;
+}
+
+.hero .app-icon {
+  width: 112px;
+  height: 112px;
+  border-radius: 24px;
+  margin-bottom: 28px;
+  filter: drop-shadow(0 16px 40px rgba(199, 92, 235, 0.35))
+          drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+}
+
+.hero .eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 18px;
+}
+
+.hero h1 {
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  margin: 0 0 22px;
+}
+
+.hero h1 .grad {
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero p.sub {
+  font-size: 18px;
+  color: var(--text-secondary);
+  max-width: 620px;
+  margin: 0 auto 36px;
+}
+
+/* ─── buttons ─── */
+
+.cta-row {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  border-radius: var(--radius-btn);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  cursor: pointer;
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+
+.btn.primary {
+  background: var(--brand-gradient-diag);
+  box-shadow:
+    0 8px 24px rgba(255, 82, 140, 0.32),
+    0 8px 24px rgba(56, 158, 255, 0.22);
+}
+
+.btn.primary:hover { transform: translateY(-1px); }
+.btn.primary:active { transform: translateY(0) scale(0.98); }
+
+.btn.outline {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+}
+.btn.outline:hover { background: rgba(255, 255, 255, 0.09); }
+
+/* ─── section headers ─── */
+
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 10px;
+}
+
+section h2 {
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+
+section p.lede {
+  color: var(--text-secondary);
+  margin: 0 0 32px;
+  max-width: 620px;
+}
+
+/* ─── card grids ─── */
+
+.grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.card {
+  position: relative;
+  background:
+    linear-gradient(180deg, var(--tile-tint, transparent), transparent 60%),
+    var(--card-fill);
+  border: 1px solid var(--card-stroke);
+  border-radius: var(--radius-card);
+  padding: 22px;
+  overflow: hidden;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.35s ease;
+}
+
+/* Soft glow overlay that fades in on hover, tinted by each tile's accent */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 0% 0%, var(--tile-glow, transparent), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card > * { position: relative; z-index: 1; }
+
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-4px);
+  box-shadow:
+    0 14px 32px rgba(0, 0, 0, 0.28),
+    0 0 0 1px var(--tile-ring, rgba(255, 255, 255, 0.08));
+}
+
+.card:hover::before { opacity: 0.55; }
+
+.card .tile {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: #fff;
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.35s ease,
+    border-color 0.25s ease;
+  box-shadow:
+    0 6px 14px var(--tile-glow, rgba(199, 92, 235, 0.18)),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.card .tile svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.card:hover .tile {
+  transform: translateY(-1px) scale(1.06) rotate(-3deg);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow:
+    0 12px 26px var(--tile-glow, rgba(199, 92, 235, 0.45)),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+/* ─── tile color variants ─── */
+
+.tile.c-cyan    { background: linear-gradient(135deg, #22D3EE, #3B82F6); }
+.tile.c-green   { background: linear-gradient(135deg, #34D399, #10B981); }
+.tile.c-red     { background: linear-gradient(135deg, #FB7185, #EF4444); }
+.tile.c-amber   { background: linear-gradient(135deg, #FBBF24, #F97316); }
+.tile.c-rainbow { background: linear-gradient(135deg, #F472B6 0%, #C084FC 35%, #60A5FA 70%, #34D399 100%); }
+.tile.c-indigo  { background: linear-gradient(135deg, #818CF8, #6366F1); }
+.tile.c-violet  { background: linear-gradient(135deg, #C084FC, #8B5CF6); }
+.tile.c-pink    { background: linear-gradient(135deg, #F472B6, #EC4899); }
+.tile.c-teal    { background: linear-gradient(135deg, #2DD4BF, #0EA5E9); }
+.tile.c-blue    { background: linear-gradient(135deg, #60A5FA, #2563EB); }
+.tile.c-orange  { background: linear-gradient(135deg, #FDBA74, #EA580C); }
+.tile.c-mint    { background: linear-gradient(135deg, #6EE7B7, #14B8A6); }
+.tile.c-magenta { background: linear-gradient(135deg, #F0ABFC, #D946EF); }
+.tile.c-coral   { background: linear-gradient(135deg, #FCA5A5, #F43F5E); }
+
+.card .tile.brand {
+  background: var(--brand-gradient-diag);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+/* Per-card variables: subtle default top tint + glow color + hover ring */
+.card:has(.tile.c-cyan)    { --tile-tint: rgba(59, 130, 246, 0.10);  --tile-glow: rgba(59, 130, 246, 0.45);  --tile-ring: rgba(59, 130, 246, 0.28); }
+.card:has(.tile.c-green)   { --tile-tint: rgba(16, 185, 129, 0.10);  --tile-glow: rgba(16, 185, 129, 0.45);  --tile-ring: rgba(16, 185, 129, 0.26); }
+.card:has(.tile.c-red)     { --tile-tint: rgba(239, 68, 68, 0.10);   --tile-glow: rgba(239, 68, 68, 0.45);   --tile-ring: rgba(239, 68, 68, 0.26); }
+.card:has(.tile.c-amber)   { --tile-tint: rgba(249, 115, 22, 0.10);  --tile-glow: rgba(249, 115, 22, 0.45);  --tile-ring: rgba(249, 115, 22, 0.26); }
+.card:has(.tile.c-rainbow) { --tile-tint: rgba(192, 132, 252, 0.10); --tile-glow: rgba(192, 132, 252, 0.45); --tile-ring: rgba(192, 132, 252, 0.26); }
+.card:has(.tile.c-indigo)  { --tile-tint: rgba(99, 102, 241, 0.10);  --tile-glow: rgba(99, 102, 241, 0.45);  --tile-ring: rgba(99, 102, 241, 0.26); }
+.card:has(.tile.c-violet)  { --tile-tint: rgba(139, 92, 246, 0.10);  --tile-glow: rgba(139, 92, 246, 0.45);  --tile-ring: rgba(139, 92, 246, 0.26); }
+.card:has(.tile.c-pink)    { --tile-tint: rgba(236, 72, 153, 0.10);  --tile-glow: rgba(236, 72, 153, 0.45);  --tile-ring: rgba(236, 72, 153, 0.26); }
+.card:has(.tile.c-teal)    { --tile-tint: rgba(14, 165, 233, 0.10);  --tile-glow: rgba(14, 165, 233, 0.45);  --tile-ring: rgba(14, 165, 233, 0.26); }
+.card:has(.tile.c-blue)    { --tile-tint: rgba(37, 99, 235, 0.10);   --tile-glow: rgba(37, 99, 235, 0.45);   --tile-ring: rgba(37, 99, 235, 0.26); }
+.card:has(.tile.c-orange)  { --tile-tint: rgba(234, 88, 12, 0.10);   --tile-glow: rgba(234, 88, 12, 0.45);   --tile-ring: rgba(234, 88, 12, 0.26); }
+.card:has(.tile.c-mint)    { --tile-tint: rgba(20, 184, 166, 0.10);  --tile-glow: rgba(20, 184, 166, 0.45);  --tile-ring: rgba(20, 184, 166, 0.26); }
+.card:has(.tile.c-magenta) { --tile-tint: rgba(217, 70, 239, 0.10);  --tile-glow: rgba(217, 70, 239, 0.45);  --tile-ring: rgba(217, 70, 239, 0.26); }
+.card:has(.tile.c-coral)   { --tile-tint: rgba(244, 63, 94, 0.10);   --tile-glow: rgba(244, 63, 94, 0.45);   --tile-ring: rgba(244, 63, 94, 0.26); }
+.card:has(.tile.brand)     { --tile-tint: rgba(199, 92, 235, 0.12);  --tile-glow: rgba(199, 92, 235, 0.5);   --tile-ring: rgba(199, 92, 235, 0.32); }
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .card .tile, .card::before { transition: none !important; }
+  .card:hover { transform: none; }
+  .card:hover .tile { transform: none; }
+}
+
+.card h3 {
+  font-size: 16px;
+  margin: 0 0 6px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.card p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.card .pro-pill {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--brand-gradient);
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+/* ─── pricing ─── */
+
+.price-wrap {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr 1fr;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+@media (max-width: 640px) {
+  .price-wrap { grid-template-columns: 1fr; }
+}
+
+.price {
+  background: var(--card-fill);
+  border: 1px solid var(--card-stroke);
+  border-radius: var(--radius-card);
+  padding: 28px;
+}
+
+.price.pro {
+  background:
+    linear-gradient(180deg, rgba(255, 82, 140, 0.10), rgba(56, 158, 255, 0.08)),
+    var(--card-fill-strong);
+  border-color: rgba(255, 255, 255, 0.16);
+  position: relative;
+  overflow: hidden;
+}
+
+.price.pro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--brand-gradient);
+  mask: linear-gradient(#000, transparent 70%);
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.price .tier {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.price.pro .tier {
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.price .amount {
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 8px 0 4px;
+}
+
+.price .note {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 0 0 18px;
+}
+
+.price ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.price li {
+  padding: 6px 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.price li::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand-gradient);
+  flex-shrink: 0;
+}
+
+/* ─── section spacing ─── */
+
+section {
+  padding: 64px 0;
+}
+
+section.tight { padding: 40px 0; }
+
+hr.sep {
+  border: 0;
+  height: 1px;
+  background: var(--card-stroke);
+  margin: 0;
+}
+
+/* ─── footer ─── */
+
+footer {
+  padding: 48px 0 36px;
+  color: var(--text-tertiary);
+  font-size: 13px;
+  text-align: center;
+}
+
+footer .links {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  margin-bottom: 14px;
+}
+
+footer a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+footer a:hover { color: var(--text-primary); }
+
+/* ─── screenshots: macOS window chrome ───
+ *
+ * Source PNGs are 1779×1162. We let the browser do default high-quality
+ * downscale — no image-rendering overrides (that crunches photos on retina).
+ */
+.window {
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0B0E1F;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.55),
+    0 4px 12px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.4s ease;
+  isolation: isolate;
+}
+
+.window img {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: auto;
+}
+
+/* Hero screenshot — the star of the page */
+.hero-shot-wrap {
+  position: relative;
+  padding: 0 0 56px;
+  margin-top: -4px;
+}
+
+.hero-shot-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -20% 0 -5% 0;
+  background:
+    radial-gradient(ellipse 50% 40% at 50% 40%, rgba(199, 92, 235, 0.30), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 30% 70%, rgba(255, 82, 140, 0.18), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 70% 70%, rgba(56, 158, 255, 0.18), transparent 60%);
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.shot-hero {
+  box-shadow:
+    0 60px 140px rgba(0, 0, 0, 0.65),
+    0 10px 28px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 180px rgba(199, 92, 235, 0.26);
+  /* No 3D tilt: perspective/rotateX makes the GPU rasterize the image softly
+     (visibly blurry on a 1x display until a hover flattened it). A flat element
+     renders at full resolution. A plain 2D lift on hover stays crisp. */
+  border-radius: 20px;
+}
+
+.shot-hero:hover {
+  transform: translateY(-3px);
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 40px auto 0;
+  max-width: 760px;
+  padding: 18px 24px;
+  background: var(--card-fill);
+  border: 1px solid var(--card-stroke);
+  border-radius: var(--radius-card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.hero-stats .stat {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hero-stats .stat strong {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-stats .stat span {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.3px;
+}
+
+@media (max-width: 640px) {
+  .hero-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+}
+
+/* Showcase: alternating text / screenshot rows */
+.showcase-intro {
+  text-align: center;
+  padding-bottom: 24px;
+}
+
+.showcase-intro h2,
+.showcase-intro p.lede {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.showcase {
+  padding: 8px 0 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+}
+
+.showcase-row {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: 56px;
+  align-items: center;
+}
+
+.showcase-row.reverse {
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+}
+
+.showcase-row.reverse .showcase-copy { order: 2; }
+.showcase-row.reverse .window        { order: 1; }
+
+.showcase-copy h3 {
+  font-size: clamp(24px, 3vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 14px 0 14px;
+}
+
+.showcase-copy p {
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 0 18px;
+}
+
+.showcase-row .window {
+  box-shadow:
+    0 36px 80px rgba(0, 0, 0, 0.5),
+    0 6px 18px rgba(0, 0, 0, 0.32),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 0 80px var(--showcase-glow, rgba(199, 92, 235, 0.18));
+}
+
+.showcase-row:nth-child(1) .window { --showcase-glow: rgba(34, 211, 238, 0.22); }
+.showcase-row:nth-child(2) .window { --showcase-glow: rgba(199, 92, 235, 0.26); }
+.showcase-row:nth-child(3) .window { --showcase-glow: rgba(249, 115, 22, 0.22); }
+.showcase-row:nth-child(4) .window { --showcase-glow: rgba(20, 184, 166, 0.22); }
+
+/* Chips (small tool label above showcase heading) */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.chip svg {
+  width: 14px;
+  height: 14px;
+}
+
+.chip .pro-pill {
+  margin-left: 4px;
+  font-size: 9px;
+  padding: 2px 6px;
+}
+
+.chip.chip-cyan   { background: linear-gradient(135deg, rgba(34, 211, 238, 0.18), rgba(59, 130, 246, 0.14)); border-color: rgba(59, 130, 246, 0.30); }
+.chip.chip-amber  { background: linear-gradient(135deg, rgba(251, 191, 36, 0.18), rgba(249, 115, 22, 0.14)); border-color: rgba(249, 115, 22, 0.30); }
+.chip.chip-teal   { background: linear-gradient(135deg, rgba(45, 212, 191, 0.18), rgba(14, 165, 233, 0.14)); border-color: rgba(14, 165, 233, 0.30); }
+.chip.chip-brand  { background: var(--brand-soft); border-color: rgba(199, 92, 235, 0.30); }
+
+/* Pills (compact feature tags under copy) */
+.pills {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pills li {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+/* Pro badge corner treatment on the compact tools grid */
+.card.pro {
+  background:
+    linear-gradient(180deg, rgba(199, 92, 235, 0.08), transparent 60%),
+    var(--card-fill-strong);
+}
+
+.why-grid {
+  /* Four tiles on desktop; auto-fit lets it fall to 2 on mid-sized
+     windows and the 1-column rule in the mobile media query below
+     handles the narrowest viewport. 220px min keeps each card wide
+     enough for its heading + one-line description. */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.pricing-footnote {
+  text-align: center;
+  color: var(--text-tertiary);
+  font-size: 13px;
+  margin: 24px auto 0;
+  max-width: 560px;
+}
+
+@media (max-width: 860px) {
+  .showcase-row,
+  .showcase-row.reverse {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .showcase-row.reverse .showcase-copy { order: 1; }
+  .showcase-row.reverse .window        { order: 2; }
+  .showcase { gap: 56px; }
+  .why-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .window { transition: none; }
+  .shot-hero { transform: none; }
+  .shot-hero:hover { transform: none; }
+}
+
+/* ─── prose (privacy page) ─── */
+
+.prose {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 0 24px;
+}
+
+.prose h1 {
+  font-size: clamp(32px, 4.5vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+
+.prose .updated {
+  color: var(--text-tertiary);
+  font-size: 13px;
+  margin-bottom: 32px;
+}
+
+.prose h2 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 36px 0 10px;
+}
+
+.prose p, .prose li {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 15.5px;
+  line-height: 1.65;
+}
+
+.prose strong { color: var(--text-primary); }
+
+.prose a {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: rgba(199, 92, 235, 0.6);
+  text-underline-offset: 3px;
+}
+
+.prose a:hover {
+  text-decoration-color: var(--brand-pink);
+}

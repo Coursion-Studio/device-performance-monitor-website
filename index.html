@@ -1,6 +1,265 @@
 <!doctype html>
-<meta charset="utf-8">
-<title>Device Performance Monitor</title>
-<meta http-equiv="refresh" content="0; url=https://github.com/Coursion-Studio/device-performance-monitor/releases/latest">
-<p>Device Performance Monitor — <a href="https://github.com/Coursion-Studio/device-performance-monitor/releases/latest">latest release</a>.
-The Sparkle feed lives at <a href="/appcast.xml">appcast.xml</a>.</p>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Device Performance Monitor — live memory, CPU &amp; FPS for one app on Mac</title>
+  <meta name="description" content="A native macOS app that watches the live memory, CPU, threads and frame-rate of one app on an Android phone, an iOS Simulator, or a real iPhone or iPad. Nothing hard-coded." />
+  <meta property="og:title" content="Device Performance Monitor" />
+  <meta property="og:description" content="Live memory, CPU, thread and frame-rate monitoring for one app on Android, an iOS Simulator or a real iPhone/iPad." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dpm.coursion.studio/" />
+  <meta property="og:image" content="https://dpm.coursion.studio/screenshot-dashboard.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="icon.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* command snippet + install cards — small additions on top of the shared house style */
+    code {
+      font-family: ui-monospace, "SF Mono", Menlo, Monaco, monospace;
+      font-size: 0.92em;
+    }
+    .cmd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid var(--card-stroke);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 14px;
+      color: #fff;
+    }
+    .cmd code { white-space: normal; overflow-wrap: anywhere; }
+    .install-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1fr 1fr;
+      max-width: 860px;
+    }
+    @media (max-width: 720px) { .install-grid { grid-template-columns: 1fr; } }
+    .install-grid .card h3 { font-size: 18px; }
+    .install-grid .req { color: var(--text-tertiary); font-size: 13px; margin-top: 14px; }
+    /* Homebrew command in the hero */
+    .hero-cmd { max-width: 640px; margin: 28px auto 0; }
+    .hero-cmd-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 10px;
+    }
+    .hero-cmd .cmd { margin-top: 0; }
+    /* copy button inside the command box */
+    .copy-btn {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: rgba(255, 255, 255, 0.85);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+    .copy-btn:hover { background: rgba(255, 255, 255, 0.15); }
+    .copy-btn svg { width: 14px; height: 14px; }
+    .copy-btn.copied { color: #34d399; border-color: rgba(52, 211, 153, 0.45); }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+
+  <div class="container">
+    <nav class="top">
+      <div class="brand">
+        <img src="icon.png" alt="Device Performance Monitor" />
+        <span>Device Performance Monitor</span>
+      </div>
+      <div class="links">
+        <a href="#features">Features</a>
+        <a href="#showcase">Tour</a>
+        <a href="#download">Download</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <img class="app-icon" src="icon.png" alt="Device Performance Monitor icon" />
+      <div class="eyebrow">Native macOS · Android · iOS Simulator · iPhone &amp; iPad</div>
+      <h1>See exactly what your app<br><span class="grad">does to a device.</span></h1>
+      <p class="sub">Device Performance Monitor watches the live memory, CPU, threads and frame-rate of one app — on an Android phone, an iOS Simulator, or a real iPhone or iPad. You pick the platform, the device and the app inside the window. Nothing is hard-coded.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#download">Download for Mac</a>
+        <a class="btn outline" href="#showcase">Take the tour</a>
+      </div>
+      <div class="hero-cmd">
+        <span class="hero-cmd-label">or install with Homebrew</span>
+        <div class="cmd"><code>brew install --cask coursion-studio/tools/device-performance-monitor</code><button class="copy-btn" type="button" aria-label="Copy install command"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+      </div>
+    </section>
+
+    <div class="hero-shot-wrap">
+      <figure class="window shot-hero">
+        <img src="screenshot-dashboard.png" alt="Device Performance Monitor dashboard — live memory, CPU and thread charts for Sage on an iPhone simulator" />
+      </figure>
+      <div class="hero-stats">
+        <div class="stat"><strong>3</strong><span>Platforms</span></div>
+        <div class="stat"><strong>12+</strong><span>Live metrics</span></div>
+        <div class="stat"><strong>1s</strong><span>Sampling</span></div>
+        <div class="stat"><strong>CSV · JSON · MD</strong><span>Exports</span></div>
+      </div>
+    </div>
+
+    <section id="features">
+      <div class="section-label">FEATURES</div>
+      <h2>Every number, one app, live.</h2>
+      <p class="lede">One app at a time, sampled once a second, with only the metrics you chose fetched — so the tool never distorts what it is measuring.</p>
+
+      <div class="grid">
+        <div class="card">
+          <div class="tile c-violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="9" rx="1.5"/><path d="M6 8v9M10 8v9M14 8v9M18 8v9M5 20v-3M9 20v-3M15 20v-3M19 20v-3"/></svg></div>
+          <h3>Live memory</h3>
+          <p>App PSS, resident and swap, plus the full pool breakdown — native heap, Java heap, graphics, code — updated every second.</p>
+        </div>
+        <div class="card">
+          <div class="tile c-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg></div>
+          <h3>CPU &amp; threads</h3>
+          <p>Per-process CPU and a live thread count, read straight from <code>/proc</code> and differenced tick to tick.</p>
+        </div>
+        <div class="card">
+          <div class="tile c-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"/></svg></div>
+          <h3>Frames &amp; jank</h3>
+          <p>Frames per second from SurfaceFlinger — even for a SurfaceView game — with jank percentage and frame-time p95 from gfxinfo.</p>
+        </div>
+        <div class="card">
+          <div class="tile c-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.19M15 6h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-3.19"/><path d="M23 13v-2"/><path d="M11 6 7 12h6l-4 6"/></svg></div>
+          <h3>Battery &amp; network</h3>
+          <p>Battery level, temperature and current draw, plus per-app received and sent throughput.</p>
+        </div>
+        <div class="card">
+          <div class="tile c-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+          <h3>Any target</h3>
+          <p>One Android phone over adb, an iOS Simulator, or a real iPhone or iPad — chosen in the window, nothing hard-coded.</p>
+        </div>
+        <div class="card">
+          <div class="tile c-pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98M15.41 6.51 8.59 10.49"/></svg></div>
+          <h3>Export anywhere</h3>
+          <p>Save a session as CSV, JSON, or a Markdown summary you can paste straight into a pull request.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="showcase" class="tight">
+      <div class="showcase-intro">
+        <div class="section-label">THE TOUR</div>
+        <h2>Watch a real session unfold.</h2>
+        <p class="lede">Memory that never comes back down, a CPU spike that lines up with a tap, a thread count that only climbs — the things you open the app to find.</p>
+      </div>
+
+      <div class="showcase">
+        <div class="showcase-row">
+          <div class="showcase-copy">
+            <span class="chip chip-brand">Memory over time</span>
+            <h3>Live memory, broken down.</h3>
+            <p>The app's total footprint and the share actually resident in RAM, charted second by second with minimum, average and peak called out. The session-change card tells you at a glance whether you finished heavier than you started.</p>
+            <ul class="pills">
+              <li>App PSS</li><li>Resident RAM</li><li>Swap</li><li>Pool breakdown</li>
+            </ul>
+          </div>
+          <figure class="window">
+            <img src="shot-memory.png" alt="Live memory chart with app memory and resident RAM, plus minimum, average and peak" />
+          </figure>
+        </div>
+
+        <div class="showcase-row reverse">
+          <div class="showcase-copy">
+            <span class="chip chip-cyan">CPU · threads · frames</span>
+            <h3>Not just memory.</h3>
+            <p>Per-process CPU as a share of a core, a live thread count that surfaces leaks the moment it stops coming back down, and frame-rate, jank and frame-time percentiles for anything that draws.</p>
+            <ul class="pills">
+              <li>App CPU</li><li>Threads</li><li>FPS</li><li>Jank %</li><li>Frame p95</li>
+            </ul>
+          </div>
+          <figure class="window">
+            <img src="shot-cpu.png" alt="CPU over time chart with per-process CPU usage and summary statistics" />
+          </figure>
+        </div>
+
+        <div class="showcase-row">
+          <div class="showcase-copy">
+            <span class="chip chip-amber">Pick your target</span>
+            <h3>Point it at anything.</h3>
+            <p>Start by choosing what to watch — an Android phone over adb, an iOS Simulator, or a real iPhone or iPad. The app finds ready devices for you; nothing is hard-coded to one project.</p>
+            <ul class="pills">
+              <li>Android</li><li>iOS Simulator</li><li>iPhone &amp; iPad</li>
+            </ul>
+          </div>
+          <figure class="window">
+            <img src="shot-setup.png" alt="Setup step choosing between Android, iOS Simulator, and a real iPhone or iPad" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <hr class="sep" />
+
+    <section id="download">
+      <div class="section-label">DOWNLOAD</div>
+      <h2>Free. Universal. Auto-updating.</h2>
+      <p class="lede">A signed, universal build for Apple silicon and Intel that updates itself in place.</p>
+
+      <div class="install-grid">
+        <div class="card">
+          <div class="tile c-violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg></div>
+          <h3>Direct download</h3>
+          <p>Grab the latest notarized disk image and drag it to Applications.</p>
+          <div class="cta-row" style="justify-content:flex-start;margin-top:14px;">
+            <a class="btn primary" href="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/latest">Download the DMG</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="tile c-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 17 6-6-6-6"/><path d="M12 19h8"/></svg></div>
+          <h3>Homebrew</h3>
+          <p>Prefer the command line? Install and upgrade it with a cask.</p>
+          <div class="cmd"><code>brew install --cask coursion-studio/tools/device-performance-monitor</code><button class="copy-btn" type="button" aria-label="Copy install command"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+        </div>
+      </div>
+      <p class="req" style="color:var(--text-tertiary);font-size:13px;margin-top:18px;">Requires macOS 14 (Sonoma) or later. Android monitoring needs <code>adb</code>; iOS monitoring needs Xcode's command-line tools.</p>
+    </section>
+
+    <footer>
+      <div class="links">
+        <a href="https://coursion.studio">Coursion</a>
+        <a href="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/latest">Releases</a>
+      </div>
+      <div>© 2026 Coursion. All rights reserved.</div>
+    </footer>
+  </div>
+  <script>
+    document.querySelectorAll(".copy-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var code = btn.parentElement.querySelector("code");
+        if (!code) return;
+        navigator.clipboard.writeText(code.textContent.trim()).then(function () {
+          btn.classList.add("copied");
+          var label = btn.querySelector("span");
+          var prev = label ? label.textContent : "";
+          if (label) label.textContent = "Copied";
+          setTimeout(function () {
+            btn.classList.remove("copied");
+            if (label) label.textContent = prev;
+          }, 1600);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
