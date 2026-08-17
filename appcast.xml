@@ -6,16 +6,16 @@
     <description>Updates for Device Performance Monitor — live memory, CPU, thread and frame-rate monitoring from Coursion.</description>
     <language>en</language>
     <item>
-      <title>Version 1.1.2</title>
-      <pubDate>Mon, 17 Aug 2026 22:06:20 +0300</pubDate>
-      <sparkle:version>13</sparkle:version>
-      <sparkle:shortVersionString>1.1.2</sparkle:shortVersionString>
+      <title>Version 1.1.3</title>
+      <pubDate>Mon, 17 Aug 2026 23:26:19 +0300</pubDate>
+      <sparkle:version>14</sparkle:version>
+      <sparkle:shortVersionString>1.1.3</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
       <description><![CDATA[<ul>
-<li><strong>Refreshed settings icons</strong> — the preferences window now uses soft 3D glyphs throughout the sidebar and every row.</li>
-<li>Everything from 1.1.x: AI session analysis (Claude / GPT / Gemini) with per-screen charts and token counts, saved session history, React Native + Compose/Fragment screen tracking, and a What&#x27;s New screen.</li>
+<li><strong>Fuller app icon</strong> — the icon now fills its tile edge-to-edge in the Dock, Activity Monitor and Finder.</li>
+<li>Everything from 1.1.x: AI session analysis (Claude / GPT / Gemini) with charts and token counts, session history, React Native screen tracking, refreshed 3D settings icons, and a What&#x27;s New screen.</li>
 </ul>]]></description>
-      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.1.2/DevicePerformanceMonitor-1.1.2.dmg" type="application/octet-stream" sparkle:edSignature="yWLENUezTmO8NFmX0RGdX+jWZyvLMuEDXHIwhmSHCqX5ClSmwRPhyGMBNh5l5v7f0mkmtvPM6uOCA/aKtmPiBg==" length="25515900" />
+      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.1.3/DevicePerformanceMonitor-1.1.3.dmg" type="application/octet-stream" sparkle:edSignature="nbrCRPYF40XQTNKz2aM/78+WkbD03bevZH+d1ZEqPlJu8Uuv4oGyx0bMzECNR4pI5xSrd7tJloUFb3u8T08bDw==" length="25534608" />
     </item>
   </channel>
 </rss>
