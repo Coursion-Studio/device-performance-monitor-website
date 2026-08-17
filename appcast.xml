@@ -5,5 +5,19 @@
     <link>https://dpm.coursion.studio/appcast.xml</link>
     <description>Updates for Device Performance Monitor — live memory, CPU, thread and frame-rate monitoring from Coursion.</description>
     <language>en</language>
+    <item>
+      <title>Version 1.1.0</title>
+      <pubDate>Mon, 17 Aug 2026 17:43:58 +0300</pubDate>
+      <sparkle:version>11</sparkle:version>
+      <sparkle:shortVersionString>1.1.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<ul>
+<li><strong>AI session analysis</strong> — have Claude, GPT, or Gemini review a monitoring session and get a plain-language summary, per-screen diagnosis and fixes, a worst-screens ranking, and anomaly flags. Includes per-screen charts and token counts; switch providers per run.</li>
+<li><strong>Session history</strong> — every stopped session is saved automatically, so you can reopen and analyze any earlier run at any time.</li>
+<li><strong>Better screen tracking</strong> — detects the on-device screen behind each reading, now including React Native routes and Compose/Fragment screens via a DPM_SCREEN log marker, plus a built-in Diagnose tool.</li>
+<li><strong>Crash reporting and privacy-first analytics</strong> for stability and usage insight.</li>
+</ul>]]></description>
+      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.1.0/DevicePerformanceMonitor-1.1.0.dmg" type="application/octet-stream" sparkle:edSignature="tA/n+hAMhDZlZgqRmM4KQ2PF+JVDHJx6n68r9/gp2P0qluwY1DW2uGKFuGG9ZoFifwV3aDtFkfue+zLnfYhlDw==" length="13520741" />
+    </item>
   </channel>
 </rss>
