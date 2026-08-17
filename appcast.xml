@@ -6,18 +6,16 @@
     <description>Updates for Device Performance Monitor — live memory, CPU, thread and frame-rate monitoring from Coursion.</description>
     <language>en</language>
     <item>
-      <title>Version 1.1.0</title>
-      <pubDate>Mon, 17 Aug 2026 17:43:58 +0300</pubDate>
-      <sparkle:version>11</sparkle:version>
-      <sparkle:shortVersionString>1.1.0</sparkle:shortVersionString>
+      <title>Version 1.1.1</title>
+      <pubDate>Mon, 17 Aug 2026 21:01:38 +0300</pubDate>
+      <sparkle:version>12</sparkle:version>
+      <sparkle:shortVersionString>1.1.1</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
       <description><![CDATA[<ul>
-<li><strong>AI session analysis</strong> — have Claude, GPT, or Gemini review a monitoring session and get a plain-language summary, per-screen diagnosis and fixes, a worst-screens ranking, and anomaly flags. Includes per-screen charts and token counts; switch providers per run.</li>
-<li><strong>Session history</strong> — every stopped session is saved automatically, so you can reopen and analyze any earlier run at any time.</li>
-<li><strong>Better screen tracking</strong> — detects the on-device screen behind each reading, now including React Native routes and Compose/Fragment screens via a DPM_SCREEN log marker, plus a built-in Diagnose tool.</li>
-<li><strong>Crash reporting and privacy-first analytics</strong> for stability and usage insight.</li>
+<li><strong>What&#x27;s New screen</strong> — A new modal shows what changed after each update, and any time from the app menu.</li>
+<li>Includes everything from 1.1.0: AI session analysis (Claude / GPT / Gemini) with per-screen charts and token counts, saved session history you can reopen and analyze later, and screen tracking that follows React Native and Compose/Fragment screens.</li>
 </ul>]]></description>
-      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.1.0/DevicePerformanceMonitor-1.1.0.dmg" type="application/octet-stream" sparkle:edSignature="tA/n+hAMhDZlZgqRmM4KQ2PF+JVDHJx6n68r9/gp2P0qluwY1DW2uGKFuGG9ZoFifwV3aDtFkfue+zLnfYhlDw==" length="13520741" />
+      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.1.1/DevicePerformanceMonitor-1.1.1.dmg" type="application/octet-stream" sparkle:edSignature="t3RzZP/jG3xKEgKQv7IuRnTJzU1BpvMHh5BRn0ENMhuydQr/thZmF4CB8KvepA3f2uI2I9b3Yi6f5fieE7jCDQ==" length="13599211" />
     </item>
   </channel>
 </rss>
