@@ -6,13 +6,13 @@
     <description>Updates for Device Performance Monitor — live memory, CPU, thread and frame-rate monitoring from Coursion.</description>
     <language>en</language>
     <item>
-      <title>Version 1.2.0</title>
-      <pubDate>Wed, 19 Aug 2026 21:14:04 +0300</pubDate>
-      <sparkle:version>15</sparkle:version>
-      <sparkle:shortVersionString>1.2.0</sparkle:shortVersionString>
+      <title>Version 1.3.0</title>
+      <pubDate>Thu, 20 Aug 2026 00:10:40 +0300</pubDate>
+      <sparkle:version>16</sparkle:version>
+      <sparkle:shortVersionString>1.3.0</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<p>Tools hub &amp; App bundle size: a Home launcher to pick monitoring or a tool, a new bundle-size analyzer (.apk/.aab/.ipa) with real per-device download estimates that match Android Studio, and 3D icons throughout.</p>]]></description>
-      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.2.0/DevicePerformanceMonitor-1.2.0.dmg" type="application/octet-stream" sparkle:edSignature="bjjXrG71VxZPgkIAlWOZpyti1db8bL5jD7DRhsmL5SbUQ0L3WhAyGG7BB6+dpfe22FJ2GP3qDKMVr3ej0L8bCw==" length="27254838" />
+      <description><![CDATA[<p>Startup timing, the Log viewer and Battery &amp; thermal now cover iOS (simulator and physical devices) alongside Android; Startup timing lets you pick from installed apps; the log view renders parsed, color-coded rows; and every surface has a proper Home button.</p>]]></description>
+      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.3.0/DevicePerformanceMonitor-1.3.0.dmg" type="application/octet-stream" sparkle:edSignature="Pg81h4rlyIzBs8SqmytIh3dBpWmy9yyU9GokyjWCm8s9BDyfSuCF399JMCQEz6Czgl+4PyXjJ1AQwKOVOxVJCQ==" length="30561649" />
     </item>
   </channel>
 </rss>
