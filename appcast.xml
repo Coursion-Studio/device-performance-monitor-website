@@ -6,13 +6,13 @@
     <description>Updates for Device Performance Monitor — live memory, CPU, thread and frame-rate monitoring from Coursion.</description>
     <language>en</language>
     <item>
-      <title>Version 1.3.0</title>
-      <pubDate>Thu, 20 Aug 2026 00:10:40 +0300</pubDate>
-      <sparkle:version>16</sparkle:version>
-      <sparkle:shortVersionString>1.3.0</sparkle:shortVersionString>
+      <title>Version 1.3.1</title>
+      <pubDate>Fri, 21 Aug 2026 11:14:09 +0300</pubDate>
+      <sparkle:version>17</sparkle:version>
+      <sparkle:shortVersionString>1.3.1</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<p>Startup timing, the Log viewer and Battery &amp; thermal now cover iOS (simulator and physical devices) alongside Android; Startup timing lets you pick from installed apps; the log view renders parsed, color-coded rows; and every surface has a proper Home button.</p>]]></description>
-      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.3.0/DevicePerformanceMonitor-1.3.0.dmg" type="application/octet-stream" sparkle:edSignature="Pg81h4rlyIzBs8SqmytIh3dBpWmy9yyU9GokyjWCm8s9BDyfSuCF399JMCQEz6Czgl+4PyXjJ1AQwKOVOxVJCQ==" length="30561649" />
+      <description><![CDATA[<p>Compare two .aab builds and get the size a device actually downloads. Enabling R8 used to read as a 3.5 MB saving when devices got 11.3 MB back — the archive&#x27;s copy of the R8 mapping and debug symbols, which Google Play strips, were being counted. A new card names the individual files that moved, and everything Play keeps but never ships is listed separately, out of the total. Also: the app-hang check was wrong more often than right, so it&#x27;s gone.</p>]]></description>
+      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.3.1/DevicePerformanceMonitor-1.3.1.dmg" type="application/octet-stream" sparkle:edSignature="Yp6xDmdwL72CrBRdaA7JwzdUv5sIcTnB8vBKhRXPQWao0TcPCLrx6+U8ZvDYIU5hg/WlxfHJ8d6eXDorKF6iCA==" length="30553255" />
     </item>
   </channel>
 </rss>
