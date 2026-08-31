@@ -6,10 +6,10 @@
     <description>Updates for Device Performance Monitor — live memory, CPU, thread and frame-rate monitoring from Coursion.</description>
     <language>en</language>
     <item>
-      <title>Version 1.5.5</title>
-      <pubDate>Mon, 31 Aug 2026 21:17:54 +0300</pubDate>
-      <sparkle:version>24</sparkle:version>
-      <sparkle:shortVersionString>1.5.5</sparkle:shortVersionString>
+      <title>Version 1.5.6</title>
+      <pubDate>Mon, 31 Aug 2026 21:35:41 +0300</pubDate>
+      <sparkle:version>25</sparkle:version>
+      <sparkle:shortVersionString>1.5.6</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
       <description><![CDATA[<!DOCTYPE html><html><head><meta charset='utf-8'><style>
   :root { color-scheme: light dark; }
@@ -54,11 +54,12 @@
     ul.feats li strong { color: #a99dff; }
     code { background: rgba(255,255,255,.10); }
   }
-</style></head><body><span class="badge">Version 1.5.5</span><h1 class="title">A prettier update</h1><ul class="feats">
-<li><strong>A branded update dialog</strong> — The &quot;new version available&quot; notes are now a dark, adaptive card that matches the app instead of plain black-on-white, and show the full feature list rather than a one-line summary.</li>
-<li><strong>Custom art everywhere in What&#x27;s New</strong> — Every feature row now has its own soft-3D glyph — a translate globe, a magic wand for polish, a tool grid for the launcher — instead of falling back to a generic sparkle. Language, polish, export and general updates each got a purpose-drawn icon.</li>
+</style></head><body><span class="badge">Version 1.5.6</span><h1 class="title">Home opens right</h1><ul class="feats">
+<li><strong>Pressing a tool actually opens it</strong> — On Home, tapping a tool card resized the window but left you looking at the launcher instead of the tool. Fixed — the tool now opens every time.</li>
+<li><strong>A smooth open</strong> — The window now eases open into the tool instead of snapping, so entering a surface feels calm rather than abrupt.</li>
+<li><strong>Distinct settings icons</strong> — Metrics, Alerts, Command line and Language each got their own soft-3D glyph in Settings, instead of sharing one gear.</li>
 </ul></body></html>]]></description>
-      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.5.5/DevicePerformanceMonitor-1.5.5.dmg" type="application/octet-stream" sparkle:edSignature="Fxhv/08Mpi+JNbHh1dq0r+bmmkK2jmSJzEOXEJgLU3HqfY5n49tff14UhdM5dAHAzMOoAcWwiBvXYln0KBhVDA==" length="36235452" />
+      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.5.6/DevicePerformanceMonitor-1.5.6.dmg" type="application/octet-stream" sparkle:edSignature="xOxcObOgu0669dKrPNPUwE9WQO6vcJho5cyInftO6irmmsUBpQKVKxfAAC0I71GoNyt/qBvSOMTezKl5nUGrDA==" length="36238382" />
     </item>
   </channel>
 </rss>
