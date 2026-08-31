@@ -6,13 +6,13 @@
     <description>Updates for Device Performance Monitor — live memory, CPU, thread and frame-rate monitoring from Coursion.</description>
     <language>en</language>
     <item>
-      <title>Version 1.5.3</title>
-      <pubDate>Mon, 31 Aug 2026 18:14:02 +0300</pubDate>
-      <sparkle:version>22</sparkle:version>
-      <sparkle:shortVersionString>1.5.3</sparkle:shortVersionString>
+      <title>Version 1.5.4</title>
+      <pubDate>Mon, 31 Aug 2026 20:58:27 +0300</pubDate>
+      <sparkle:version>23</sparkle:version>
+      <sparkle:shortVersionString>1.5.4</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<p>Battery &amp; thermal now saves labeled reports and compares runs across branches or releases (drain + temperature deltas, overlaid charge curves), with an auto-record mode and a dpm battery CLI for CI.</p>]]></description>
-      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.5.3/DevicePerformanceMonitor-1.5.3.dmg" type="application/octet-stream" sparkle:edSignature="RyDDJ+Wkic9ipKR6tlQoi1WI6f2vPTfxMZJJ90EQT2iJnJPo5f9qfKgNsOW5L+WZB7ak5J5jvzGOx6UTzvXEBA==" length="34043330" />
+      <description><![CDATA[<p>The app now speaks Turkish, Spanish, German and French (Settings &gt; Language, switches live); the Home launcher sizes to your screen and opens centred; and Settings &gt; Command line documents the dpm CLI.</p>]]></description>
+      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.5.4/DevicePerformanceMonitor-1.5.4.dmg" type="application/octet-stream" sparkle:edSignature="zMsJmzTV3FvhqwMEpC4Kl2cDE7bd3Rm5w/7AUabZJIzu0Jo5/Ak+iUyPk3tTcF+0hb/t0bykb2XqqJZWtZO8CA==" length="34151386" />
     </item>
   </channel>
 </rss>
