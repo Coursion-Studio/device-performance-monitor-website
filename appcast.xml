@@ -6,13 +6,13 @@
     <description>Updates for Device Performance Monitor — live memory, CPU, thread and frame-rate monitoring from Coursion.</description>
     <language>en</language>
     <item>
-      <title>Version 1.4.0</title>
-      <pubDate>Fri, 28 Aug 2026 21:05:52 +0300</pubDate>
-      <sparkle:version>18</sparkle:version>
-      <sparkle:shortVersionString>1.4.0</sparkle:shortVersionString>
+      <title>Version 1.5.0</title>
+      <pubDate>Mon, 31 Aug 2026 15:34:56 +0300</pubDate>
+      <sparkle:version>19</sparkle:version>
+      <sparkle:shortVersionString>1.5.0</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<p>Threshold alerts, a screenshot &amp; record tool, a headless CLI recorder (dpm record) for CI, chart image export, and much sharper build comparisons (expandable categories, build-mismatch warning, shipped-vs-metadata charts). Plus export-truncation notes, an iOS running-state fix, friendlier empty states and accessibility improvements.</p>]]></description>
-      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.4.0/DevicePerformanceMonitor-1.4.0.dmg" type="application/octet-stream" sparkle:edSignature="LNt4S3O8Fj173HbHnrofLeZQyu9906XvRy6Afu7d0W1JYoRNbiaeAyVokTObyZMIB1dcKQJVrV8b6C9hNlZFDQ==" length="31102152" />
+      <description><![CDATA[<p>A new Jank timeline tool (per-frame render times, janky/frozen highlighting, p95) and PDF chart export.</p>]]></description>
+      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.5.0/DevicePerformanceMonitor-1.5.0.dmg" type="application/octet-stream" sparkle:edSignature="/fAa6givx6NzqM/ULIgbUuQrgOHONQCBhaA12/91Z/aDiHd++UwD+PqboMGvC9ePcphyrmhG3qJuWieTcY1vAg==" length="31170699" />
     </item>
   </channel>
 </rss>
