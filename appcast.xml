@@ -6,13 +6,13 @@
     <description>Updates for Device Performance Monitor — live memory, CPU, thread and frame-rate monitoring from Coursion.</description>
     <language>en</language>
     <item>
-      <title>Version 1.5.1</title>
-      <pubDate>Mon, 31 Aug 2026 16:06:51 +0300</pubDate>
-      <sparkle:version>20</sparkle:version>
-      <sparkle:shortVersionString>1.5.1</sparkle:shortVersionString>
+      <title>Version 1.5.2</title>
+      <pubDate>Mon, 31 Aug 2026 16:16:28 +0300</pubDate>
+      <sparkle:version>21</sparkle:version>
+      <sparkle:shortVersionString>1.5.2</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<p>A much nicer What&#x27;s New (fixed ordering, per-feature 3D icons and colours), new Screenshot &amp; record and Jank timeline icons, and a better-aligned Home launcher.</p>]]></description>
-      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.5.1/DevicePerformanceMonitor-1.5.1.dmg" type="application/octet-stream" sparkle:edSignature="/ej2cq52e5FNQ+Iqnyo/cqRizjF8nA1IOnjFeEkqdmGHQgoH18Qf3vetA2Ebyf14MP41uKrmANR5Hj2Y1H5lDQ==" length="32123447" />
+      <description><![CDATA[<p>Every What&#x27;s New feature now has a custom 3D glyph (CLI recorder, threshold alerts, Tools hub).</p>]]></description>
+      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.5.2/DevicePerformanceMonitor-1.5.2.dmg" type="application/octet-stream" sparkle:edSignature="ZI8NzW27p0PNjjV9YF94GrxkoSm6EOcBkyy9MCA4Xo7wAp6NHFkGj9gSz/W5poCUSoF1BwJYewmDHsBSwT2LAQ==" length="33930107" />
     </item>
   </channel>
 </rss>
