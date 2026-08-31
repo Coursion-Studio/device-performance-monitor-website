@@ -6,13 +6,59 @@
     <description>Updates for Device Performance Monitor — live memory, CPU, thread and frame-rate monitoring from Coursion.</description>
     <language>en</language>
     <item>
-      <title>Version 1.5.4</title>
-      <pubDate>Mon, 31 Aug 2026 20:58:27 +0300</pubDate>
-      <sparkle:version>23</sparkle:version>
-      <sparkle:shortVersionString>1.5.4</sparkle:shortVersionString>
+      <title>Version 1.5.5</title>
+      <pubDate>Mon, 31 Aug 2026 21:17:54 +0300</pubDate>
+      <sparkle:version>24</sparkle:version>
+      <sparkle:shortVersionString>1.5.5</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<p>The app now speaks Turkish, Spanish, German and French (Settings &gt; Language, switches live); the Home launcher sizes to your screen and opens centred; and Settings &gt; Command line documents the dpm CLI.</p>]]></description>
-      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.5.4/DevicePerformanceMonitor-1.5.4.dmg" type="application/octet-stream" sparkle:edSignature="zMsJmzTV3FvhqwMEpC4Kl2cDE7bd3Rm5w/7AUabZJIzu0Jo5/Ak+iUyPk3tTcF+0hb/t0bykb2XqqJZWtZO8CA==" length="34151386" />
+      <description><![CDATA[<!DOCTYPE html><html><head><meta charset='utf-8'><style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: transparent; }
+  body {
+    font: 13.5px/1.55 -apple-system, "SF Pro Text", system-ui, sans-serif;
+    color: #23222b; padding: 4px 2px 10px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .badge {
+    display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .5px;
+    text-transform: uppercase; color: #fff; padding: 3px 9px; border-radius: 999px;
+    background: linear-gradient(135deg, #7c6cff, #4f8bff);
+  }
+  h1.title {
+    font-size: 19px; font-weight: 800; letter-spacing: -.2px;
+    margin: 11px 0 2px; color: #1b1a22;
+  }
+  ul.feats { list-style: none; margin: 14px 0 0; padding: 0; }
+  ul.feats li {
+    position: relative; padding: 9px 4px 9px 22px; margin: 0;
+    border-top: 1px solid rgba(120,120,140,.14);
+  }
+  ul.feats li:first-child { border-top: 0; }
+  ul.feats li::before {
+    content: ""; position: absolute; left: 4px; top: 15px;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: linear-gradient(135deg, #7c6cff, #4f8bff);
+  }
+  ul.feats li strong { color: #4f46e5; font-weight: 700; }
+  p { margin: 8px 0; }
+  code {
+    font: 12px "SF Mono", ui-monospace, Menlo, monospace;
+    background: rgba(120,120,140,.14); padding: 1px 5px; border-radius: 5px;
+  }
+  a { color: #4f8bff; text-decoration: none; }
+  @media (prefers-color-scheme: dark) {
+    body { color: #d9d8e2; }
+    h1.title { color: #f2f1f7; }
+    ul.feats li { border-top-color: rgba(255,255,255,.09); }
+    ul.feats li strong { color: #a99dff; }
+    code { background: rgba(255,255,255,.10); }
+  }
+</style></head><body><span class="badge">Version 1.5.5</span><h1 class="title">A prettier update</h1><ul class="feats">
+<li><strong>A branded update dialog</strong> — The &quot;new version available&quot; notes are now a dark, adaptive card that matches the app instead of plain black-on-white, and show the full feature list rather than a one-line summary.</li>
+<li><strong>Custom art everywhere in What&#x27;s New</strong> — Every feature row now has its own soft-3D glyph — a translate globe, a magic wand for polish, a tool grid for the launcher — instead of falling back to a generic sparkle. Language, polish, export and general updates each got a purpose-drawn icon.</li>
+</ul></body></html>]]></description>
+      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.5.5/DevicePerformanceMonitor-1.5.5.dmg" type="application/octet-stream" sparkle:edSignature="Fxhv/08Mpi+JNbHh1dq0r+bmmkK2jmSJzEOXEJgLU3HqfY5n49tff14UhdM5dAHAzMOoAcWwiBvXYln0KBhVDA==" length="36235452" />
     </item>
   </channel>
 </rss>
