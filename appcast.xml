@@ -6,10 +6,10 @@
     <description>Updates for Device Performance Monitor — live memory, CPU, thread and frame-rate monitoring from Coursion.</description>
     <language>en</language>
     <item>
-      <title>Version 1.5.6</title>
-      <pubDate>Mon, 31 Aug 2026 21:35:41 +0300</pubDate>
-      <sparkle:version>25</sparkle:version>
-      <sparkle:shortVersionString>1.5.6</sparkle:shortVersionString>
+      <title>Version 1.5.7</title>
+      <pubDate>Mon, 07 Sep 2026 16:24:08 +0300</pubDate>
+      <sparkle:version>26</sparkle:version>
+      <sparkle:shortVersionString>1.5.7</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
       <description><![CDATA[<!DOCTYPE html><html><head><meta charset='utf-8'><style>
   :root { color-scheme: light dark; }
@@ -54,12 +54,11 @@
     ul.feats li strong { color: #a99dff; }
     code { background: rgba(255,255,255,.10); }
   }
-</style></head><body><span class="badge">Version 1.5.6</span><h1 class="title">Home opens right</h1><ul class="feats">
-<li><strong>Pressing a tool actually opens it</strong> — On Home, tapping a tool card resized the window but left you looking at the launcher instead of the tool. Fixed — the tool now opens every time.</li>
-<li><strong>A smooth open</strong> — The window now eases open into the tool instead of snapping, so entering a surface feels calm rather than abrupt.</li>
-<li><strong>Distinct settings icons</strong> — Metrics, Alerts, Command line and Language each got their own soft-3D glyph in Settings, instead of sharing one gear.</li>
+</style></head><body><span class="badge">Version 1.5.7</span><h1 class="title">Benchmark &amp; a one-screen Home</h1><ul class="feats">
+<li><strong>Benchmark tool</strong> — A new tool measures Android cold-start the way Macrobenchmark does, over adb — no Gradle module or test needed. Pick a compilation profile (none, partial or full), and it recompiles the app, warms it up, then times many cold launches and reports the *distribution* — median, p90 and p95 — with a stable-vs-noisy read, so a real regression stands out from run-to-run jitter.</li>
+<li><strong>Everything on one screen</strong> — The Home launcher no longer scrolls: every tool fits at once in a compact grid, and the window sizes itself to the content instead of leaving a gap.</li>
 </ul></body></html>]]></description>
-      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.5.6/DevicePerformanceMonitor-1.5.6.dmg" type="application/octet-stream" sparkle:edSignature="xOxcObOgu0669dKrPNPUwE9WQO6vcJho5cyInftO6irmmsUBpQKVKxfAAC0I71GoNyt/qBvSOMTezKl5nUGrDA==" length="36238382" />
+      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.5.7/DevicePerformanceMonitor-1.5.7.dmg" type="application/octet-stream" sparkle:edSignature="TL1GQb/8V1Qkhp8l2D/1jxKhypPZihDmrRcRH07fX+aRm06vhyFc0HbqrspPsibZJunj31+B7PQr5rZUTC3XDA==" length="36862083" />
     </item>
   </channel>
 </rss>
