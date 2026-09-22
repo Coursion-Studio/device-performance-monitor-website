@@ -6,10 +6,10 @@
     <description>Updates for Device Performance Monitor — live memory, CPU, thread and frame-rate monitoring from Coursion.</description>
     <language>en</language>
     <item>
-      <title>Version 1.6.0</title>
-      <pubDate>Mon, 21 Sep 2026 20:46:58 +0300</pubDate>
-      <sparkle:version>27</sparkle:version>
-      <sparkle:shortVersionString>1.6.0</sparkle:shortVersionString>
+      <title>Version 1.6.1</title>
+      <pubDate>Tue, 22 Sep 2026 21:15:07 +0300</pubDate>
+      <sparkle:version>28</sparkle:version>
+      <sparkle:shortVersionString>1.6.1</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
       <description><![CDATA[<!DOCTYPE html><html><head><meta charset='utf-8'><style>
   :root { color-scheme: light dark; }
@@ -54,15 +54,11 @@
     ul.feats li strong { color: #a99dff; }
     code { background: rgba(255,255,255,.10); }
   }
-</style></head><body><span class="badge">Version 1.6.0</span><h1 class="title">A real dpm command line</h1><ul class="feats">
-<li><strong>One-click CLI install</strong> — Settings → Command line now puts <code>dpm</code> on your PATH with a single button, and tells you if it points at an old copy.</li>
-<li><strong>Command line, redesigned</strong> — Every command has its own tab with an options table, required and default tags, copyable examples and colour-coded exit codes.</li>
-<li><strong>New CLI commands</strong> — <code>dpm devices</code> lists connected devices and simulators, <code>dpm apps</code> lists installed packages, and <code>dpm help &lt;command&gt;</code> explains any command. Typos get a &quot;did you mean&quot; instead of opening the app.</li>
-<li><strong>Smarter CI gates</strong> — <code>dpm record</code> adds a <code>--max-cpu</code> budget, writes a min/avg/max summary and a pass/fail gate into the JSON, shows live progress, and fails clearly when the app isn&#x27;t running.</li>
-<li><strong>A refined Liquid Glass icon</strong> — The app icon is now a layered Icon Composer icon, so it gets the glass look on macOS 26 and 27.</li>
-<li><strong>macOS 27 fixes</strong> — Built and tested against the macOS 27 SDK, with Swift 6 concurrency and deprecated file-dialog fixes.</li>
+</style></head><body><span class="badge">Version 1.6.1</span><h1 class="title">Hand the CLI to an AI agent</h1><ul class="feats">
+<li><strong>Prompts for your AI agent</strong> — Settings → Command line now ships four copyable prompts for Claude Code, Codex or Cursor: check a flow for memory leaks, compare before and after a change, add a CI performance gate, or compare battery drain across branches. The agent runs <code>dpm</code> on your Mac and reads the JSON back to you.</li>
+<li><strong>Command line on Home</strong> — A &quot;Command line &amp; AI&quot; card on the Home screen opens straight to that page, so the CLI is findable without digging through Settings.</li>
 </ul></body></html>]]></description>
-      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.6.0/DevicePerformanceMonitor-1.6.0.dmg" type="application/octet-stream" sparkle:edSignature="76Xu+Q6bO6Faf/grwHcVpElOWs2YrgtJ9UQC6RF/rhWhve7XsjdlDYuqyo7Vt9MgbQZITRzlEWLCb5SxWVEsCg==" length="38831564" />
+      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.6.1/DevicePerformanceMonitor-1.6.1.dmg" type="application/octet-stream" sparkle:edSignature="7N04n1GdjBIR+Yr48/be1v9n3furrgZ9VsZceX6Lp5i5+lIwa5YXtPgO/UJB8j3v5ArRhD6lOBk66kTzsjFnCQ==" length="38816527" />
     </item>
   </channel>
 </rss>
