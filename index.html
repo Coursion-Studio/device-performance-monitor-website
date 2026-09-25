@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Device Performance Monitor — live memory, CPU &amp; FPS, AI analysis and a device toolbox for Mac</title>
-  <meta name="description" content="A native macOS app that watches the live memory, CPU, threads and frame-rate of one app on an Android phone, an iOS Simulator, or a real iPhone or iPad — with AI session analysis and a toolbox: app bundle size &amp; build compare, startup timing, jank timeline, log viewer, battery reports, screenshot &amp; record, threshold alerts and a headless CLI for CI. Nothing hard-coded." />
+  <title>Device Performance Monitor — live memory, CPU &amp; FPS, AI analysis, a device toolbox and a dpm CLI for Mac</title>
+  <meta name="description" content="A native macOS app that watches the live memory, CPU, threads and frame-rate of one app on an Android phone, an iOS Simulator, or a real iPhone or iPad — with AI session analysis and a toolbox: app bundle size &amp; build compare, startup timing, a cold-start benchmark, jank timeline, log viewer, battery reports, screenshot &amp; record, threshold alerts and a dpm command line for CI and AI agents. Nothing hard-coded." />
   <meta property="og:title" content="Device Performance Monitor" />
-  <meta property="og:description" content="Live memory, CPU, thread and frame-rate monitoring for one app on Android, an iOS Simulator or a real iPhone/iPad — plus AI analysis and a toolbox: bundle size &amp; compare, startup timing, jank, logs, battery reports, capture, alerts and a CI-ready CLI." />
+  <meta property="og:description" content="Live memory, CPU, thread and frame-rate monitoring for one app on Android, an iOS Simulator or a real iPhone/iPad — plus AI analysis and a toolbox: bundle size &amp; compare, startup timing, cold-start benchmark, jank, logs, battery reports, capture, alerts and a dpm CLI for CI and AI agents." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://dpm.coursion.studio/" />
   <meta property="og:image" content="https://dpm.coursion.studio/screenshot-dashboard.png" />
@@ -85,9 +85,9 @@
         <span>Device Performance Monitor</span>
       </div>
       <div class="links">
+        <a href="#showcase">Tour</a>
         <a href="#features">Features</a>
         <a href="#tools">Tools</a>
-        <a href="#showcase">Tour</a>
         <a href="#download">Download</a>
       </div>
     </nav>
@@ -96,7 +96,7 @@
       <img class="app-icon" src="icon.png" alt="Device Performance Monitor icon" />
       <div class="eyebrow">Native macOS · Android · iOS Simulator · iPhone &amp; iPad</div>
       <h1>See exactly what your app<br><span class="grad">does to a device.</span></h1>
-      <p class="sub">Device Performance Monitor watches the live memory, CPU, threads and frame-rate of one app — on an Android phone, an iOS Simulator, or a real iPhone or iPad. Have an AI read the session, then reach for the built-in tools: bundle size and build compare, startup timing, a jank timeline, a live log viewer, battery reports, screenshot &amp; record, threshold alerts and a headless CLI for CI. You pick the platform, the device and the app inside the window. Nothing is hard-coded.</p>
+      <p class="sub">Device Performance Monitor watches the live memory, CPU, threads and frame-rate of one app — on an Android phone, an iOS Simulator, or a real iPhone or iPad. Have an AI read the session, then reach for the built-in tools: bundle size and build compare, startup timing, a cold-start benchmark, a jank timeline, a live log viewer, battery reports, screenshot &amp; record, threshold alerts, and a <code>dpm</code> command line you can drop into CI or hand to an AI agent. You pick the platform, the device and the app inside the window. Nothing is hard-coded.</p>
       <div class="cta-row">
         <a class="btn primary" href="#download">Download for Mac</a>
         <a class="btn outline" href="#showcase">Take the tour</a>
@@ -114,10 +114,118 @@
       <div class="hero-stats">
         <div class="stat"><strong>3</strong><span>Platforms</span></div>
         <div class="stat"><strong>12+</strong><span>Live metrics</span></div>
-        <div class="stat"><strong>6</strong><span>Built-in tools</span></div>
+        <div class="stat"><strong>7</strong><span>Built-in tools</span></div>
         <div class="stat"><strong>AI</strong><span>Session analysis</span></div>
       </div>
     </div>
+
+    <section id="showcase" class="tight">
+      <div class="showcase-intro">
+        <div class="section-label">THE TOUR</div>
+        <h2>See it before you install it.</h2>
+        <p class="lede">Memory that never comes back down, a CPU spike that lines up with a tap, a build that grew for no reason — the things you open the app to find, and the tools you reach for next.</p>
+      </div>
+
+      <div class="showcase">
+        <div class="showcase-row">
+          <div class="showcase-copy">
+            <span class="chip chip-brand">The launcher</span>
+            <h3>One home, every tool.</h3>
+            <p>The app opens on a launcher that fits your screen. Live monitoring is the headline; seven tools sit under it, each with its own glyph, plus a Command line &amp; AI card. Press one and the window eases open straight into it.</p>
+            <ul class="pills">
+              <li>Bundle size</li><li>Startup</li><li>Benchmark</li><li>Logs</li><li>Battery</li><li>Capture</li><li>Jank</li><li>CLI</li>
+            </ul>
+          </div>
+          <figure class="window">
+            <img src="shot-launcher.png" alt="Device Performance Monitor home launcher with live monitoring, seven tool cards and a Command line &amp; AI card" />
+          </figure>
+        </div>
+
+        <div class="showcase-row reverse">
+          <div class="showcase-copy">
+            <span class="chip chip-cyan">Memory over time</span>
+            <h3>Live memory, broken down.</h3>
+            <p>The app's total footprint and the share actually resident in RAM, charted second by second with minimum, average and peak called out. The session-change card tells you at a glance whether you finished heavier than you started.</p>
+            <ul class="pills">
+              <li>App PSS</li><li>Resident RAM</li><li>Swap</li><li>Pool breakdown</li>
+            </ul>
+          </div>
+          <figure class="window">
+            <img src="shot-memory.png" alt="Live memory chart with app memory and resident RAM, plus minimum, average and peak" />
+          </figure>
+        </div>
+
+        <div class="showcase-row">
+          <div class="showcase-copy">
+            <span class="chip chip-amber">CPU · threads · frames</span>
+            <h3>Not just memory.</h3>
+            <p>Per-process CPU as a share of a core, a live thread count that surfaces leaks the moment it stops coming back down, and frame-rate, jank and frame-time percentiles for anything that draws.</p>
+            <ul class="pills">
+              <li>App CPU</li><li>Threads</li><li>FPS</li><li>Jank %</li><li>Frame p95</li>
+            </ul>
+          </div>
+          <figure class="window">
+            <img src="shot-cpu.png" alt="CPU over time chart with per-process CPU usage and summary statistics" />
+          </figure>
+        </div>
+
+        <div class="showcase-row reverse">
+          <div class="showcase-copy">
+            <span class="chip chip-brand">Bundle size</span>
+            <h3>See where every byte goes.</h3>
+            <p>Drop an App Bundle and get the real per-device download — one ABI, debug symbols excluded — next to the raw file, a composition bar, a treemap you can drill into, and the biggest files. It matches Android Studio; run bundletool for the exact figure or compare two builds.</p>
+            <ul class="pills">
+              <li>Per-device estimate</li><li>Treemap</li><li>Biggest files</li><li>Build compare</li>
+            </ul>
+          </div>
+          <figure class="window">
+            <img src="shot-bundle.png" alt="App bundle size tool showing a 125 MB per-device download estimate, composition breakdown and treemap for a real .aab" />
+          </figure>
+        </div>
+
+        <div class="showcase-row">
+          <div class="showcase-copy">
+            <span class="chip chip-cyan">The dpm command line</span>
+            <h3>A real CLI, documented in the app.</h3>
+            <p>Install <code>dpm</code> on your PATH with one button. Every command — <code>record</code>, <code>battery</code>, <code>devices</code>, <code>apps</code> — gets its own tab with an options table, required and default tags, copyable examples and colour-coded exit codes. Set memory and CPU budgets and <code>dpm record</code> becomes a CI gate.</p>
+            <ul class="pills">
+              <li>One-click install</li><li>--max-app-memory</li><li>--max-cpu</li><li>Exit codes</li><li>JSON summary</li>
+            </ul>
+          </div>
+          <figure class="window">
+            <img src="shot-cli.png" alt="Settings page documenting the dpm record command with its options, defaults and examples" />
+          </figure>
+        </div>
+
+        <div class="showcase-row reverse">
+          <div class="showcase-copy">
+            <span class="chip chip-amber">With an AI agent</span>
+            <h3>Hand the CLI to your agent.</h3>
+            <p>Four copyable prompts for Claude Code, Codex or Cursor: check a flow for memory leaks, compare before and after a change, add a CI performance gate, or compare battery drain across branches. The agent runs <code>dpm</code> on your Mac and reads the JSON back to you.</p>
+            <ul class="pills">
+              <li>Memory leaks</li><li>Before / after</li><li>CI gate</li><li>Battery by branch</li>
+            </ul>
+          </div>
+          <figure class="window">
+            <img src="shot-ai-prompts.png" alt="Copyable AI-agent prompts for checking memory leaks, comparing a change and adding a CI performance gate" />
+          </figure>
+        </div>
+
+        <div class="showcase-row">
+          <div class="showcase-copy">
+            <span class="chip chip-brand">Pick your target</span>
+            <h3>Point it at anything.</h3>
+            <p>Start by choosing what to watch — an Android phone over adb, an iOS Simulator, or a real iPhone or iPad. The app finds ready devices for you; nothing is hard-coded to one project.</p>
+            <ul class="pills">
+              <li>Android</li><li>iOS Simulator</li><li>iPhone &amp; iPad</li>
+            </ul>
+          </div>
+          <figure class="window">
+            <img src="shot-setup.png" alt="Setup step choosing between Android, iOS Simulator, and a real iPhone or iPad" />
+          </figure>
+        </div>
+      </div>
+    </section>
 
     <section id="features">
       <div class="section-label">FEATURES</div>
@@ -181,7 +289,7 @@
     <section id="tools">
       <div class="section-label">THE TOOLBOX</div>
       <h2>More than a monitor.</h2>
-      <p class="lede">A hub of standalone tools sits alongside live monitoring — pick one from the Home launcher and get to work. Six full tools, threshold alerts and a headless CLI, with more landing over time.</p>
+      <p class="lede">A hub of standalone tools sits alongside live monitoring — pick one from the Home launcher and get to work. Seven full tools, threshold alerts and a <code>dpm</code> command line, with more landing over time.</p>
 
       <div class="grid">
         <div class="card">
@@ -193,6 +301,11 @@
           <div class="tile c-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg></div>
           <h3>Startup timing</h3>
           <p>Cold and warm launch times on Android, an iOS Simulator or a real iPhone — batched across runs and charted with averages, so a regression in first-frame time is obvious. Pick the app from the installed list instead of typing an identifier.</p>
+        </div>
+        <div class="card">
+          <div class="tile c-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="8"/><path d="M12 14V10M10 2h4M12 2v4"/></svg></div>
+          <h3>Cold-start benchmark</h3>
+          <p>Measure Android cold start the way Macrobenchmark does — over adb, no Gradle module or test needed. Pick a compilation profile (none, partial or full), and it recompiles, warms up, then times many launches and reports the <strong>distribution</strong> — median, p90 and p95 — with a stable-vs-noisy read.</p>
         </div>
         <div class="card">
           <div class="tile c-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2 6 4-14 2 8h3M19 12h2"/></svg></div>
@@ -216,8 +329,13 @@
         </div>
         <div class="card">
           <div class="tile c-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m6 9 3 3-3 3M13 15h4"/></svg></div>
-          <h3>Headless CLI &amp; CI</h3>
-          <p>The app doubles as a <code>dpm</code> command line. <code>dpm record</code> samples an app without a window and can fail a build when peak memory exceeds a limit; <code>dpm battery</code> captures a labeled report per branch — drop either into CI.</p>
+          <h3>dpm CLI &amp; CI</h3>
+          <p>The app doubles as a <code>dpm</code> command line, installed on your PATH with one click. <code>dpm record</code> samples an app without a window, writes a min/avg/max summary and fails the build on a memory or CPU budget; <code>dpm battery</code> captures a labeled report per branch; <code>dpm devices</code> and <code>dpm apps</code> find what to point it at.</p>
+        </div>
+        <div class="card">
+          <div class="tile c-violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 1.9 4.6L18.5 9l-4.6 1.9L12 15l-1.9-4.1L5.5 9l4.6-1.4z"/><path d="M19 14l.9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9z"/></svg></div>
+          <h3>Prompts for your AI agent</h3>
+          <p>Copy a ready-made prompt into Claude Code, Codex or Cursor — check a flow for leaks, compare before and after a change, add a CI gate, or compare battery drain across branches. The agent runs <code>dpm</code> and reads the JSON back to you.</p>
         </div>
         <div class="card">
           <div class="tile c-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
@@ -226,87 +344,6 @@
         </div>
       </div>
 
-      <div class="showcase" style="margin-top:52px;">
-        <div class="showcase-row">
-          <div class="showcase-copy">
-            <span class="chip chip-brand">The launcher</span>
-            <h3>One home, every tool.</h3>
-            <p>The app opens on a launcher that sizes to your screen. Live monitoring is the headline; each tool sits under it with its own glyph. Press one and the window eases open straight into it.</p>
-            <ul class="pills">
-              <li>Bundle size</li><li>Startup</li><li>Jank</li><li>Logs</li><li>Battery</li><li>Capture</li>
-            </ul>
-          </div>
-          <figure class="window">
-            <img src="shot-launcher.png" alt="Device Performance Monitor home launcher with live monitoring and six tool cards" />
-          </figure>
-        </div>
-
-        <div class="showcase-row reverse">
-          <div class="showcase-copy">
-            <span class="chip chip-cyan">Bundle size</span>
-            <h3>See where every byte goes.</h3>
-            <p>Drop an App Bundle and get the real per-device download — one ABI, debug symbols excluded — next to the raw file, a composition bar, a treemap you can drill into, and the biggest files. It matches Android Studio; run bundletool for the exact figure or compare two builds.</p>
-            <ul class="pills">
-              <li>Per-device estimate</li><li>Treemap</li><li>Biggest files</li><li>Build compare</li>
-            </ul>
-          </div>
-          <figure class="window">
-            <img src="shot-bundle.png" alt="App bundle size tool showing a 125 MB per-device download estimate, composition breakdown and treemap for a real .aab" />
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <section id="showcase" class="tight">
-      <div class="showcase-intro">
-        <div class="section-label">THE TOUR</div>
-        <h2>Watch a real session unfold.</h2>
-        <p class="lede">Memory that never comes back down, a CPU spike that lines up with a tap, a thread count that only climbs — the things you open the app to find.</p>
-      </div>
-
-      <div class="showcase">
-        <div class="showcase-row">
-          <div class="showcase-copy">
-            <span class="chip chip-brand">Memory over time</span>
-            <h3>Live memory, broken down.</h3>
-            <p>The app's total footprint and the share actually resident in RAM, charted second by second with minimum, average and peak called out. The session-change card tells you at a glance whether you finished heavier than you started.</p>
-            <ul class="pills">
-              <li>App PSS</li><li>Resident RAM</li><li>Swap</li><li>Pool breakdown</li>
-            </ul>
-          </div>
-          <figure class="window">
-            <img src="shot-memory.png" alt="Live memory chart with app memory and resident RAM, plus minimum, average and peak" />
-          </figure>
-        </div>
-
-        <div class="showcase-row reverse">
-          <div class="showcase-copy">
-            <span class="chip chip-cyan">CPU · threads · frames</span>
-            <h3>Not just memory.</h3>
-            <p>Per-process CPU as a share of a core, a live thread count that surfaces leaks the moment it stops coming back down, and frame-rate, jank and frame-time percentiles for anything that draws.</p>
-            <ul class="pills">
-              <li>App CPU</li><li>Threads</li><li>FPS</li><li>Jank %</li><li>Frame p95</li>
-            </ul>
-          </div>
-          <figure class="window">
-            <img src="shot-cpu.png" alt="CPU over time chart with per-process CPU usage and summary statistics" />
-          </figure>
-        </div>
-
-        <div class="showcase-row">
-          <div class="showcase-copy">
-            <span class="chip chip-amber">Pick your target</span>
-            <h3>Point it at anything.</h3>
-            <p>Start by choosing what to watch — an Android phone over adb, an iOS Simulator, or a real iPhone or iPad. The app finds ready devices for you; nothing is hard-coded to one project.</p>
-            <ul class="pills">
-              <li>Android</li><li>iOS Simulator</li><li>iPhone &amp; iPad</li>
-            </ul>
-          </div>
-          <figure class="window">
-            <img src="shot-setup.png" alt="Setup step choosing between Android, iOS Simulator, and a real iPhone or iPad" />
-          </figure>
-        </div>
-      </div>
     </section>
 
     <hr class="sep" />
@@ -332,7 +369,7 @@
           <div class="cmd"><code>brew install --cask coursion-studio/tools/device-performance-monitor</code><button class="copy-btn" type="button" aria-label="Copy install command"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
         </div>
       </div>
-      <p class="req" style="color:var(--text-tertiary);font-size:13px;margin-top:18px;">Requires macOS 14 (Sonoma) or later, universal for Apple silicon and Intel. Android monitoring needs <code>adb</code>; iOS monitoring (Simulator or a real iPhone/iPad) needs Xcode's command-line tools. The bundle-size tool works on its own; its exact per-device figure optionally uses <code>bundletool</code>, and AI analysis uses your own Claude, OpenAI or Gemini key. The same app doubles as a <code>dpm</code> command line for CI.</p>
+      <p class="req" style="color:var(--text-tertiary);font-size:13px;margin-top:18px;">Requires macOS 14 (Sonoma) or later, universal for Apple silicon and Intel. Android monitoring needs <code>adb</code>; iOS monitoring (Simulator or a real iPhone/iPad) needs Xcode's command-line tools. The bundle-size tool works on its own; its exact per-device figure optionally uses <code>bundletool</code>, and AI analysis uses your own Claude, OpenAI or Gemini key. The same app doubles as a <code>dpm</code> command line for CI and AI agents.</p>
     </section>
 
     <footer>
