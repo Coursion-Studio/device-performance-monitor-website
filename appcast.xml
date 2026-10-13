@@ -6,10 +6,10 @@
     <description>Updates for Device Performance Monitor — live memory, CPU, thread and frame-rate monitoring from Coursion.</description>
     <language>en</language>
     <item>
-      <title>Version 1.6.1</title>
-      <pubDate>Tue, 22 Sep 2026 21:15:07 +0300</pubDate>
-      <sparkle:version>28</sparkle:version>
-      <sparkle:shortVersionString>1.6.1</sparkle:shortVersionString>
+      <title>Version 1.7.0</title>
+      <pubDate>Wed, 14 Oct 2026 00:37:31 +0300</pubDate>
+      <sparkle:version>29</sparkle:version>
+      <sparkle:shortVersionString>1.7.0</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
       <description><![CDATA[<!DOCTYPE html><html><head><meta charset='utf-8'><style>
   :root { color-scheme: light dark; }
@@ -54,11 +54,14 @@
     ul.feats li strong { color: #a99dff; }
     code { background: rgba(255,255,255,.10); }
   }
-</style></head><body><span class="badge">Version 1.6.1</span><h1 class="title">Hand the CLI to an AI agent</h1><ul class="feats">
-<li><strong>Prompts for your AI agent</strong> — Settings → Command line now ships four copyable prompts for Claude Code, Codex or Cursor: check a flow for memory leaks, compare before and after a change, add a CI performance gate, or compare battery drain across branches. The agent runs <code>dpm</code> on your Mac and reads the JSON back to you.</li>
-<li><strong>Command line on Home</strong> — A &quot;Command line &amp; AI&quot; card on the Home screen opens straight to that page, so the CLI is findable without digging through Settings.</li>
+</style></head><body><span class="badge">Version 1.7.0</span><h1 class="title">CLI &amp; AI agents, filled in for your app</h1><ul class="feats">
+<li><strong>Pick your device once</strong> — The page now opens on a device and app picker, and every example, prompt and CI snippet fills itself in with them. What you copy runs as-is, no placeholder to swap.</li>
+<li><strong>Agents first</strong> — The prompts moved to the top of the page and now name your real package. A new button copies — or saves — the whole command reference as <code>AGENTS.md</code>, so your repo&#x27;s agent needs no prompt at all.</li>
+<li><strong>Run it without leaving</strong> — <code>dpm devices</code> and <code>dpm apps</code> run right in the page and show their output and exit code; any example opens in Terminal with one click.</li>
+<li><strong><code>dpm docs</code></strong> — A new command prints the full reference as markdown or JSON, for an agent to read or a docs site to build from.</li>
+<li><strong>Renamed</strong> — Settings → <strong>CLI &amp; AI agents</strong>, because it is as much about the agent as the terminal.</li>
 </ul></body></html>]]></description>
-      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.6.1/DevicePerformanceMonitor-1.6.1.dmg" type="application/octet-stream" sparkle:edSignature="7N04n1GdjBIR+Yr48/be1v9n3furrgZ9VsZceX6Lp5i5+lIwa5YXtPgO/UJB8j3v5ArRhD6lOBk66kTzsjFnCQ==" length="38816527" />
+      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.7.0/DevicePerformanceMonitor-1.7.0.dmg" type="application/octet-stream" sparkle:edSignature="bx4Q5y4+fvArmnVjEUkhZfp4dvfXirhBn48jH1mDpWxhj2cpdUmPYbGYtecVF+8ZOBgF+lb8/pREp5Giw3KlAA==" length="39071649" />
     </item>
   </channel>
 </rss>
