@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>dpm — the Device Performance Monitor command line for CI and AI agents</title>
+  <meta name="description" content="Reference for the dpm CLI: record an app's memory, CPU and frame rate headlessly, fail a build on a performance budget, list devices and apps, and hand ready-made prompts to Claude Code, Codex or Cursor." />
+  <meta property="og:title" content="dpm — the Device Performance Monitor CLI" />
+  <meta property="og:description" content="Record performance headlessly, gate CI on a memory or CPU budget, and let an AI agent drive it. Every command, flag and exit code." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://dpm.coursion.studio/cli" />
+  <meta property="og:image" content="https://dpm.coursion.studio/shot-cli.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="icon.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="alternate" type="text/markdown" href="https://dpm.coursion.studio/cli.md" title="dpm CLI reference as markdown" />
+  <link rel="stylesheet" href="cli.css" />
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="container">
+    <nav class="top">
+      <div class="brand">
+        <a href="./" style="display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;">
+          <img src="icon.png" alt="Device Performance Monitor" />
+          <span>Device Performance Monitor</span>
+        </a>
+      </div>
+      <div class="links">
+        <a href="./#showcase">Tour</a>
+        <a href="./#tools">Tools</a>
+        <a href="cli.html" class="current">CLI</a>
+        <a href="./#download">Download</a>
+      </div>
+    </nav>
+
+    <section class="hero doc-hero">
+      <div class="eyebrow">COMMAND LINE · CI · AI AGENTS</div>
+      <h1><span class="grad">dpm</span> — your app's performance,<br />without the window.</h1>
+      <p class="sub">The Device Performance Monitor app is also a CLI. Give it a device and a package and it samples memory, CPU, threads and frame rate, writes JSON, and exits non-zero when a budget is blown — so CI can fail a build, and an AI agent can read the numbers back to you. Version 1.6.1 (28).</p>
+      <div class="cta-row">
+        <a class="btn primary" href="./#download">Get the app</a>
+        <a class="btn outline" href="cli.md">Read as markdown</a>
+      </div>
+    </section>
+
+    <section class="tight" id="agent">
+      <div class="section-label">WITH AN AI AGENT</div>
+      <h2>Hand it to Claude Code, Codex or Cursor.</h2>
+      <p class="lede">The agent runs <code>dpm</code> on your Mac and reads the JSON back to you. Copy a prompt, or drop the whole reference into your repo's <code>AGENTS.md</code> so the agent needs no prompt at all.</p>
+      <div class="prompt-grid"><article class="prompt-card"><h3>Check a flow for memory leaks</h3><div class="snippet prose"><pre><code>Use the dpm CLI (run `dpm help record` first). Run `dpm devices` to find my device, then record com.example.app for 120 seconds with `dpm record --platform android --package com.example.app --duration 120 --out session.json` while I use the app. When it finishes, read the summary in session.json and tell me whether app memory kept climbing or came back down, with the average and peak in MB.</code></pre><button class="copy-btn" type="button" aria-label="Copy prompt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div></article><article class="prompt-card"><h3>Compare before and after my change</h3><div class="snippet prose"><pre><code>Use dpm to measure the impact of my current change on com.example.app. Record 60 seconds with `dpm record --platform android --package com.example.app --duration 60 --out after.json`. Then stash my changes, rebuild and install the app, record again to before.json, and restore my changes. Compare the summary sections of both files and give me a table of app memory and CPU (avg and peak) with the difference.</code></pre><button class="copy-btn" type="button" aria-label="Copy prompt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div></article><article class="prompt-card"><h3>Add a performance gate to CI</h3><div class="snippet prose"><pre><code>Add a performance budget step to our CI workflow using the dpm CLI from Device Performance Monitor (`dpm help record` lists the flags). It should run `dpm record` for com.example.app with `--max-app-memory 400 --max-cpu 60 --out perf.json`, fail the job when dpm exits 1, and always upload perf.json as an artifact. Exit codes: 0 ok, 1 over budget, 2 bad usage, 3 no device or app, 4 write error.</code></pre><button class="copy-btn" type="button" aria-label="Copy prompt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div></article><article class="prompt-card"><h3>Compare battery drain across branches</h3><div class="snippet prose"><pre><code>Use `dpm battery` to compare battery drain between main and my branch for com.example.app on the connected device. For each branch: check it out, build and install the app, then run `dpm battery --label &lt;branch&gt; --package com.example.app --duration 600 --out battery-&lt;branch&gt;.json`. Finally compare drainPerHour, avgTempC and peakTempC and tell me whether my branch is worse.</code></pre><button class="copy-btn" type="button" aria-label="Copy prompt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div></article></div>
+      <p class="lede mt">Or point the agent straight at the machine-readable reference — the same text as <a href="#cmd-record">the commands below</a>:</p>
+      <div class="snippet"><pre><code>curl -s https://dpm.coursion.studio/cli.md</code></pre><button class="copy-btn" type="button" aria-label="Copy curl command"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+    </section>
+
+    <section class="tight">
+      <div class="section-label">INSTALL</div>
+      <h2>One link on your PATH.</h2>
+      <p class="lede">Install the app, then open <strong>Settings → Command line → Install</strong> — it links <code>dpm</code> into <code>/opt/homebrew/bin</code> or <code>/usr/local/bin</code> and keeps pointing at the app as it updates.</p>
+      <div class="snippet"><pre><code>brew install --cask coursion-studio/tools/device-performance-monitor</code></pre><button class="copy-btn" type="button" aria-label="Copy install command"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+      <div class="doc-nav"><a href="#cmd-record"><code>dpm record</code></a><a href="#cmd-battery"><code>dpm battery</code></a><a href="#cmd-devices"><code>dpm devices</code></a><a href="#cmd-apps"><code>dpm apps</code></a><a href="#cmd-docs"><code>dpm docs</code></a></div>
+    </section>
+
+    <section class="tight">
+      <div class="section-label">COMMANDS</div>
+      <h2>Every command, every flag.</h2>
+      
+      <article class="cmd-card" id="cmd-record">
+        <h3><code>dpm record</code></h3>
+        <p class="cmd-summary">Sample one app&#x27;s live metrics and write a session JSON.</p>
+        <p class="cmd-detail">Samples the app for --duration seconds with the same collectors the app uses, then writes every sample plus a min/avg/max summary per metric. Budgets turn it into a CI gate: the command exits 1 when one is exceeded.</p>
+        <div class="snippet"><pre><code>dpm record --platform &lt;android|simulator|iosDevice&gt; --package &lt;id&gt; --out &lt;file.json&gt; [options]</code></pre><button class="copy-btn" type="button" aria-label="Copy usage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+        <table class="flags"><thead><tr><th>Option</th><th>Meaning</th></tr></thead><tbody><tr><td><code>--platform &lt;android|simulator|iosDevice&gt;</code></td><td>Where the app runs. <span class="tag req">required</span></td></tr><tr><td><code>--package &lt;id&gt;</code></td><td>Package name or bundle identifier. <span class="tag req">required</span></td></tr><tr><td><code>--out &lt;file.json&gt;</code></td><td>Where to write the session. Use - for stdout. <span class="tag req">required</span></td></tr><tr><td><code>--serial &lt;id&gt;</code></td><td>Device serial or UDID. Default: the first ready device.</td></tr><tr><td><code>--duration &lt;seconds&gt;</code></td><td>How long to sample. <span class="tag">default 60</span></td></tr><tr><td><code>--interval &lt;seconds&gt;</code></td><td>Time between samples. <span class="tag">default 1</span></td></tr><tr><td><code>--max-app-memory &lt;MB&gt;</code></td><td>Fail when peak app memory goes over this.</td></tr><tr><td><code>--max-cpu &lt;%&gt;</code></td><td>Fail when average app CPU goes over this.</td></tr><tr><td><code>--quiet</code></td><td>Only print errors.</td></tr></tbody></table>
+        <div class="snippet"><pre><code>dpm record --platform android --package com.example.app --duration 60 --out session.json</code></pre><button class="copy-btn" type="button" aria-label="Copy example"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><div class="snippet"><pre><code>dpm record --platform android --package com.example.app \
+  --duration 120 --max-app-memory 400 --max-cpu 60 --out ci.json</code></pre><button class="copy-btn" type="button" aria-label="Copy example"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+      </article>
+      <article class="cmd-card" id="cmd-battery">
+        <h3><code>dpm battery</code></h3>
+        <p class="cmd-summary">Record a labeled battery and thermal report.</p>
+        <p class="cmd-detail">Records drain rate, average and peak temperature and the charge curve under a label, so one run per branch can be diffed in CI. Android only. With --package it also reads the app&#x27;s versionName.</p>
+        <div class="snippet"><pre><code>dpm battery --label &lt;name&gt; --out &lt;file.json&gt; [options]</code></pre><button class="copy-btn" type="button" aria-label="Copy usage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+        <table class="flags"><thead><tr><th>Option</th><th>Meaning</th></tr></thead><tbody><tr><td><code>--label &lt;name&gt;</code></td><td>What this run is, e.g. the branch. <span class="tag req">required</span></td></tr><tr><td><code>--out &lt;file.json&gt;</code></td><td>Where to write the report. Use - for stdout. <span class="tag req">required</span></td></tr><tr><td><code>--serial &lt;id&gt;</code></td><td>Device serial. Default: the first ready device.</td></tr><tr><td><code>--package &lt;id&gt;</code></td><td>App to stamp the report with.</td></tr><tr><td><code>--duration &lt;seconds&gt;</code></td><td>How long to record. <span class="tag">default 600</span></td></tr><tr><td><code>--interval &lt;seconds&gt;</code></td><td>Time between readings. <span class="tag">default 5</span></td></tr><tr><td><code>--quiet</code></td><td>Only print errors.</td></tr></tbody></table>
+        <div class="snippet"><pre><code>dpm battery --label &quot;$(git branch --show-current)&quot; \
+  --package com.example.app --duration 600 --out battery.json</code></pre><button class="copy-btn" type="button" aria-label="Copy example"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+      </article>
+      <article class="cmd-card" id="cmd-devices">
+        <h3><code>dpm devices</code></h3>
+        <p class="cmd-summary">List connected devices and simulators.</p>
+        <p class="cmd-detail">Shows every device each installed toolchain can see, with the serial to pass as --serial. Platforms whose tool is missing are skipped.</p>
+        <div class="snippet"><pre><code>dpm devices [options]</code></pre><button class="copy-btn" type="button" aria-label="Copy usage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+        <table class="flags"><thead><tr><th>Option</th><th>Meaning</th></tr></thead><tbody><tr><td><code>--platform &lt;android|simulator|iosDevice&gt;</code></td><td>Only list one platform.</td></tr><tr><td><code>--json</code></td><td>Print JSON instead of a table.</td></tr></tbody></table>
+        <div class="snippet"><pre><code>dpm devices</code></pre><button class="copy-btn" type="button" aria-label="Copy example"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><div class="snippet"><pre><code>dpm devices --platform android --json</code></pre><button class="copy-btn" type="button" aria-label="Copy example"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+      </article>
+      <article class="cmd-card" id="cmd-apps">
+        <h3><code>dpm apps</code></h3>
+        <p class="cmd-summary">List the apps installed on a device.</p>
+        <p class="cmd-detail">Prints package names you can pass to record. Only your own apps unless --all is given.</p>
+        <div class="snippet"><pre><code>dpm apps --platform &lt;android|simulator|iosDevice&gt; [options]</code></pre><button class="copy-btn" type="button" aria-label="Copy usage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+        <table class="flags"><thead><tr><th>Option</th><th>Meaning</th></tr></thead><tbody><tr><td><code>--platform &lt;android|simulator|iosDevice&gt;</code></td><td>Where to look. <span class="tag req">required</span></td></tr><tr><td><code>--serial &lt;id&gt;</code></td><td>Device serial or UDID. Default: the first ready device.</td></tr><tr><td><code>--all</code></td><td>Include system apps.</td></tr><tr><td><code>--running</code></td><td>Only apps that are running now.</td></tr><tr><td><code>--json</code></td><td>Print JSON instead of a table.</td></tr></tbody></table>
+        <div class="snippet"><pre><code>dpm apps --platform android --running</code></pre><button class="copy-btn" type="button" aria-label="Copy example"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><div class="snippet"><pre><code>dpm apps --platform android --json</code></pre><button class="copy-btn" type="button" aria-label="Copy example"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+      </article>
+      <article class="cmd-card" id="cmd-docs">
+        <h3><code>dpm docs</code></h3>
+        <p class="cmd-summary">Print this reference as markdown or JSON.</p>
+        <p class="cmd-detail">Writes the full command reference — flags, defaults, exit codes and what the JSON contains — so an AI agent or a docs site can read it instead of guessing.</p>
+        <div class="snippet"><pre><code>dpm docs [options]</code></pre><button class="copy-btn" type="button" aria-label="Copy usage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+        <table class="flags"><thead><tr><th>Option</th><th>Meaning</th></tr></thead><tbody><tr><td><code>--json</code></td><td>Print JSON instead of a table.</td></tr></tbody></table>
+        <div class="snippet"><pre><code>dpm docs &gt; dpm.md</code></pre><button class="copy-btn" type="button" aria-label="Copy example"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><div class="snippet"><pre><code>dpm docs --json</code></pre><button class="copy-btn" type="button" aria-label="Copy example"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+      </article>
+    </section>
+
+    <section class="tight">
+      <div class="section-label">EXIT CODES</div>
+      <h2>What CI reads.</h2>
+      <table class="flags exits"><thead><tr><th>Code</th><th>Meaning</th></tr></thead><tbody><tr><td><code>0</code></td><td>Success</td></tr><tr><td><code>1</code></td><td>A budget was exceeded — the CI gate failed</td></tr><tr><td><code>2</code></td><td>Bad usage — unknown command or option</td></tr><tr><td><code>3</code></td><td>No tool, device or running app to read</td></tr><tr><td><code>4</code></td><td>Could not write the output</td></tr></tbody></table>
+      <h3 class="mt">A GitHub Actions gate</h3>
+      <div class="snippet"><pre><code>- name: Performance budget
+  run: |
+    brew install --cask coursion-studio/tools/device-performance-monitor
+    DPM=&quot;/Applications/Device Performance Monitor.app/Contents/MacOS/Device Performance Monitor&quot;
+    &quot;$DPM&quot; record --platform android --package com.example.app \
+      --duration 120 --max-app-memory 400 --max-cpu 60 --out perf.json
+- uses: actions/upload-artifact@v4
+  if: always()
+  with: { name: perf, path: perf.json }</code></pre><button class="copy-btn" type="button" aria-label="Copy CI step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+    </section>
+
+    <footer>
+      <div class="links">
+        <a href="./">Home</a>
+        <a href="https://coursion.studio">Coursion</a>
+        <a href="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/latest">Releases</a>
+        <a href="mailto:support@coursion.studio">Support</a>
+      </div>
+      <div>© 2026 Coursion. All rights reserved.</div>
+    </footer>
+  </div>
+  <script>
+    document.querySelectorAll(".copy-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var code = btn.parentElement.querySelector("code");
+        if (!code) return;
+        navigator.clipboard.writeText(code.textContent.trim()).then(function () {
+          btn.classList.add("copied");
+          var label = btn.querySelector("span");
+          var prev = label ? label.textContent : "";
+          if (label) label.textContent = "Copied";
+          setTimeout(function () {
+            btn.classList.remove("copied");
+            if (label) label.textContent = prev;
+          }, 1600);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

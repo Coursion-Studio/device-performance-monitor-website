@@ -1,0 +1,29 @@
+# Device Performance Monitor
+
+> A native macOS app that measures what an app does to a device — live memory, CPU, threads and
+> frame rate on Android, the iOS Simulator or a real iPhone/iPad — and ships a `dpm` command line
+> so CI and AI agents can do the same headlessly.
+
+The app binary is the CLI. Installed from the app (Settings → Command line → Install), `dpm`
+samples a chosen package, writes JSON with a min/avg/max summary, and exits 1 when a performance
+budget is exceeded.
+
+- `dpm record` — Sample one app's live metrics and write a session JSON.
+- `dpm battery` — Record a labeled battery and thermal report.
+- `dpm devices` — List connected devices and simulators.
+- `dpm apps` — List the apps installed on a device.
+- `dpm docs` — Print this reference as markdown or JSON.
+
+Exit codes: 0 = success, 1 = a budget was exceeded — the ci gate failed, 2 = bad usage — unknown command or option, 3 = no tool, device or running app to read, 4 = could not write the output.
+
+## Docs
+
+- [dpm CLI reference (markdown)](https://dpm.coursion.studio/cli.md): every command, flag, exit code and the shape of the JSON.
+- [dpm CLI reference (HTML)](https://dpm.coursion.studio/cli): the same reference as a page.
+- [Device Performance Monitor](https://dpm.coursion.studio/): what the app itself does.
+
+## Notes
+
+- Install: `brew install --cask coursion-studio/tools/device-performance-monitor`, then link `dpm` from Settings.
+- `dpm help <command>` prints the authoritative flags of the installed version; `dpm docs --json` prints this reference as JSON.
+- Requires macOS 14+. Android needs `adb`; iOS needs Xcode's command-line tools.
