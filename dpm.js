@@ -40,6 +40,7 @@
           cpu: Math.min(96, Math.max(1.4, spike + 9.5 + (rand() - 0.5) * 8)),
           fps: spike > 40 ? 44 + (rand() - 0.5) * 14 : 59 + (rand() - 0.5) * 3,
           threads: Math.round(41 + index * 5.4 + tick * 0.08),
+          disk: loading ? 380 + rand() * 160 : 14 + rand() * 26,
           screen: screen.name,
           band: index,
         });
@@ -57,60 +58,97 @@
 
   const PLATFORMS = {
     android: {
-      label: "Android",
+      frame: "is-android",
       device: "Pixel 9 Pro",
       serial: "39021FDJH00TK9",
-      foot: "Sampling every second over adb. Switch the platform — what it can read changes with it.",
-      reads: { mem: true, cpu: true, fps: true, threads: true },
+      screenSuffix: "Activity",
+      command: "adb shell dumpsys meminfo com.example.shop",
+      note: "Frame timing comes from gfxinfo, so jank and p95 are Android's alone.",
+      scale: 1,
+      tiles: [
+        { key: "mem", label: "App memory", unit: "MB", color: "#5CC8FF" },
+        { key: "cpu", label: "App CPU", unit: "%", color: "#C79BFF" },
+        { key: "fps", label: "Frames per second", unit: "fps", color: "#5BE7B0" },
+        { key: "threads", label: "Threads", unit: "", color: "#FFC46B" },
+      ],
     },
     simulator: {
-      label: "iOS Simulator",
+      frame: "is-simulator",
       device: "iPhone 17 Pro",
       serial: "3CFEE594-803A-43A6",
-      foot: "Over simctl. Frame rate is Android-only — the app says so instead of charting a zero.",
-      reads: { mem: true, cpu: true, fps: false, threads: true },
+      screenSuffix: "",
+      command: "xcrun simctl spawn 3CFEE594 footprint com.example.shop",
+      note: "A simulator shares your Mac's CPU and GPU, so frame rate would be your machine's, not a phone's. It is left blank.",
+      scale: 1.22,
+      tiles: [
+        { key: "mem", label: "Physical footprint", unit: "MB", color: "#5CC8FF" },
+        { key: "cpu", label: "App CPU", unit: "%", color: "#C79BFF" },
+        { key: "inRam", label: "Resident in RAM", unit: "MB", color: "#8BD4FF" },
+        { key: "threads", label: "Threads", unit: "", color: "#FFC46B" },
+      ],
     },
     iosDevice: {
-      label: "iPhone",
+      frame: "is-iphone",
       device: "Kuray's iPhone",
       serial: "00008130-001638A9",
-      foot: "Over pymobiledevice3, wired or wireless. Frame timing needs the Instruments channels.",
-      reads: { mem: true, cpu: true, fps: false, threads: true },
+      screenSuffix: "",
+      command: "pymobiledevice3 developer dvt sysmon process monitor",
+      note: "Screens come from the app's own DPM_SCREEN log lines — iOS has no non-invasive way to ask what is on screen.",
+      scale: 0.74,
+      tiles: [
+        { key: "mem", label: "App memory", unit: "MB", color: "#5CC8FF" },
+        { key: "cpu", label: "App CPU", unit: "%", color: "#C79BFF" },
+        { key: "disk", label: "Disk write", unit: "KB/s", color: "#FF8AB0" },
+        { key: "threads", label: "Threads", unit: "", color: "#FFC46B" },
+      ],
     },
   };
 
   const SERIES = {
     mem: (p) => p.mb,
+    inRam: (p) => p.mb * 0.88,
     cpu: (p) => p.cpu,
     fps: (p) => p.fps,
+    disk: (p) => p.disk,
     threads: (p) => p.threads,
   };
 
-  const DECIMALS = { mem: 1, cpu: 1, fps: 0, threads: 0 };
+  const DECIMALS = { mem: 1, inRam: 1, cpu: 1, fps: 0, disk: 0, threads: 0 };
+  const SCALES = { mem: true, inRam: true };
 
   function rigStage(section) {
-    const tiles = $$("[data-rig-metric]", section);
+    const list = $("[data-rig-tiles]", section);
+    const phone = $(".rig-phone", section);
     const screen = $("[data-rig-screen]", section);
-    const foot = $("[data-rig-foot]", section);
-    let platform = "android";
+    const note = $("[data-rig-note]", section);
+    const command = $("[data-rig-command]", section);
+    const requested = new URLSearchParams(location.search).get("rig");
+    let platform = PLATFORMS[requested] ? requested : "android";
     let index = 40;
 
     const paint = () => {
       const spec = PLATFORMS[platform];
-      const window = POINTS.slice(Math.max(0, index - 44), index + 1);
-      screen.textContent = POINTS[index].screen;
-      tiles.forEach((tile) => {
-        const key = tile.dataset.rigMetric;
-        const value = $("[data-rig-value]", tile);
-        const spark = $("[data-rig-spark]", tile);
-        if (!spec.reads[key]) {
-          tile.classList.add("off");
-          value.textContent = key === "fps" ? "Android only" : "—";
-          return;
-        }
-        tile.classList.remove("off");
-        const numbers = window.map(SERIES[key]);
-        value.textContent = numbers[numbers.length - 1].toFixed(DECIMALS[key]);
+      const point = POINTS[index];
+      const frames = POINTS.slice(Math.max(0, index - 44), index + 1);
+
+      phone.className = `rig-phone ${spec.frame}`;
+      screen.textContent = point.screen + spec.screenSuffix;
+      note.textContent = spec.note;
+      command.textContent = spec.command;
+      $("[data-rig-device]", section).textContent = spec.device;
+      $("[data-rig-serial]", section).textContent = spec.serial;
+
+      spec.tiles.forEach((tile, slot) => {
+        const node = list.children[slot];
+        if (!node) return;
+        const factor = SCALES[tile.key] ? spec.scale : 1;
+        const numbers = frames.map((p) => SERIES[tile.key](p) * factor);
+        $(".rig-label", node).textContent = tile.label;
+        $(".rig-unit", node).textContent = tile.unit;
+        $("[data-rig-value]", node).textContent =
+          numbers[numbers.length - 1].toFixed(DECIMALS[tile.key]);
+        const spark = $("[data-rig-spark]", node);
+        spark.setAttribute("stroke", tile.color);
         const low = Math.min(...numbers);
         const high = Math.max(...numbers);
         const span = Math.max(1, high - low);
@@ -125,28 +163,32 @@
             .join(" ")
         );
       });
-      foot.textContent = spec.foot;
-      $("[data-rig-device]", section).textContent = spec.device;
-      $("[data-rig-serial]", section).textContent = spec.serial;
     };
 
     $$("[data-rig-platform]", section).forEach((button) => {
       button.addEventListener("click", () => {
+        if (button.dataset.rigPlatform === platform) return;
         platform = button.dataset.rigPlatform;
         $$("[data-rig-platform]", section).forEach((other) =>
           other.classList.toggle("on", other === button)
         );
+        if (!STATIC && !REDUCED) {
+          list.classList.add("swapping");
+          setTimeout(() => list.classList.remove("swapping"), 240);
+        }
         paint();
       });
     });
 
+    $$("[data-rig-platform]", section).forEach((button) =>
+      button.classList.toggle("on", button.dataset.rigPlatform === platform)
+    );
     paint();
     if (STATIC || REDUCED) return;
 
     let timer = null;
     const tick = () => {
-      index = (index + 1) % POINTS.length;
-      if (index < 40) index = 40;
+      index = index + 1 >= POINTS.length ? 40 : index + 1;
       paint();
     };
     const observer = new IntersectionObserver(
@@ -211,6 +253,10 @@
       return parts.join(" ");
     };
 
+    const tile = (name) => $(`[data-chart-tile-${name}]`, section);
+    const banner = $("[data-chart-banner]", section);
+    const screenChip = $("[data-chart-screenchip]", section);
+
     const draw = (count) => {
       const d = path(count);
       line.setAttribute("d", d);
@@ -227,11 +273,21 @@
         ...POINTS.slice(0, count).map((p) => p.mb)
       ).toFixed(1)} MB`;
       $("[data-chart-count]", section).textContent = String(count);
+
+      const now = POINTS[count - 1];
+      tile("mem").textContent = now.mb.toFixed(1);
+      tile("cpu").textContent = now.cpu.toFixed(1);
+      tile("threads").textContent = String(now.threads);
+      const delta = now.mb - POINTS[0].mb;
+      tile("delta").textContent = `${delta >= 0 ? "+" : ""}${delta.toFixed(1)}`;
+      screenChip.textContent = now.screen;
+      // The app raises this once a climb is established, not on the first bump.
+      banner.classList.toggle("show", count > POINTS.length * 0.45);
     };
 
     const finish = () => {
       draw(POINTS.length);
-      state.textContent = `${AVG.toFixed(0)} MB average · ${MAX.toFixed(0)} MB peak`;
+      state.textContent = "Stopped";
       state.classList.add("done");
     };
 

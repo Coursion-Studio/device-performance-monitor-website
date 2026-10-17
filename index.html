@@ -8,12 +8,12 @@
   <link rel="canonical" href="https://dpm.coursion.studio/" />
   <link rel="icon" type="image/png" href="icon.png" />
   <link rel="stylesheet" href="stage.css?v=1d5ceac846" />
-  <link rel="stylesheet" href="dpm.css?v=aec4ab2fb6" />
+  <link rel="stylesheet" href="dpm.css?v=a88586c42a" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://dpm.coursion.studio/" />
   <meta property="og:title" content="Device Performance Monitor" />
   <meta property="og:description" content="Live memory, CPU, threads and frame rate for one app on Android, an iOS Simulator or a real iPhone — plus AI analysis, seven tools and a dpm CLI for CI and AI agents." />
-  <meta property="og:image" content="https://dpm.coursion.studio/screenshot-dashboard.png" />
+  <meta property="og:image" content="https://dpm.coursion.studio/og.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="theme-color" content="#070A1C" />
   <script type="application/ld+json">
@@ -38,7 +38,7 @@
     };
   </script>
   <script defer src="stage.js?v=bda7026e0e"></script>
-  <script defer src="dpm.js?v=b8bfeacac0"></script>
+  <script defer src="dpm.js?v=3b52bfc757"></script>
 </head>
 <body>
   <a class="skip" href="#features">Skip to the features</a>
@@ -83,7 +83,8 @@
             <li data-rig-metric="fps"><span class="rig-label">Frames per second</span><b data-rig-value>—</b><span class="rig-unit">fps</span><svg class="rig-spark" viewBox="0 0 120 34" preserveAspectRatio="none"><path data-rig-spark fill="none" stroke="#5BE7B0" stroke-width="2" stroke-linejoin="round" d="" /></svg></li>
             <li data-rig-metric="threads"><span class="rig-label">Threads</span><b data-rig-value>—</b><span class="rig-unit"></span><svg class="rig-spark" viewBox="0 0 120 34" preserveAspectRatio="none"><path data-rig-spark fill="none" stroke="#FFC46B" stroke-width="2" stroke-linejoin="round" d="" /></svg></li>
           </ul>
-          <p class="rig-foot" data-rig-foot>Sampling every second over adb. Switch the platform — the metrics it can read change with it.</p>
+          <p class="rig-cmd" data-rig-command>adb shell dumpsys meminfo com.example.shop</p>
+          <p class="rig-foot" data-rig-note>Frame timing comes from gfxinfo, so jank and p95 are Android's alone.</p>
         </div>
       </div>
 
@@ -103,38 +104,58 @@
     <section id="live" class="sec reveal" data-stage="chart" aria-labelledby="live-title">
       <div class="glow" aria-hidden="true"></div>
       <div class="container">
-        <div class="chart-stage rise">
-          <div class="chart-head">
-            <span class="chart-app"><span class="chart-dot"></span>Shop · com.example.shop</span>
-            <span class="chart-live" data-chart-state>recording…</span>
+        <div class="appwin rise" data-chart-plotwrap>
+          <div class="appwin-bar"><span></span><span></span><span></span></div>
+          <div class="appwin-head">
+            <span class="appwin-icon"></span>
+            <span class="appwin-name"><b>Shop</b><i>com.example.shop</i></span>
+            <span class="appwin-status"><span class="appwin-chip" data-chart-screenchip>ProductList</span><span class="appwin-live" data-chart-state>Live</span></span>
           </div>
-          <div class="chart-plot" data-chart-plot>
-            <svg class="chart-svg" viewBox="0 0 720 240" preserveAspectRatio="none" aria-hidden="true">
-              <defs>
-                <linearGradient id="fillGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="var(--pal-accent)" stop-opacity=".34" />
-                  <stop offset="100%" stop-color="var(--pal-accent)" stop-opacity="0" />
-                </linearGradient>
-              </defs>
-              <g data-chart-bands></g>
-              <path data-chart-fill fill="url(#fillGrad)" d="" />
-              <path data-chart-line fill="none" stroke="var(--pal-accent)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" d="" />
-              <line data-chart-rule x1="0" y1="0" x2="0" y2="240" stroke="rgb(255 255 255 / .35)" stroke-width="1" stroke-dasharray="4 4" opacity="0" />
-              <circle data-chart-head r="4.5" fill="var(--pal-accent)" cx="0" cy="0" opacity="0" />
-            </svg>
-            <div class="chart-bandrow" data-chart-labels></div>
-            <div class="chart-readout" data-chart-readout hidden><b data-chart-value>—</b><span data-chart-screen>—</span></div>
+          <div class="appwin-tools">
+            <span class="appwin-seg"><i class="on">Android</i><i>iOS Simulator</i><i>iPhone</i></span>
+            <span class="appwin-pill">Pixel 9 Pro · 39021FDJH00TK9</span>
+            <span class="appwin-acts"><i class="stop">Stop</i><i>Marker</i><i>Export…</i></span>
           </div>
-          <ul class="chart-stats">
-            <li><span>Minimum</span><b data-chart-min>—</b></li>
-            <li><span>Average</span><b data-chart-avg>—</b></li>
-            <li><span>Peak</span><b data-chart-peak>—</b></li>
-            <li><span>Samples</span><b data-chart-count>—</b></li>
+          <div class="appwin-banner" data-chart-banner>
+            <b>App memory is climbing</b><span data-chart-rate>+116.0 MB/min over 4 min (R² 0.97)</span>
+          </div>
+          <ul class="appwin-tiles">
+            <li><span>App memory</span><b data-chart-tile-mem>—</b><i>MB</i></li>
+            <li><span>App CPU</span><b data-chart-tile-cpu>—</b><i>%</i></li>
+            <li><span>Threads</span><b data-chart-tile-threads>—</b><i></i></li>
+            <li><span>Session change</span><b data-chart-tile-delta>—</b><i>MB</i></li>
           </ul>
+          <div class="appwin-panel">
+            <div class="appwin-panel-head"><b>Memory over time</b><span>Live samples from the connected device</span></div>
+            <div class="chart-plot" data-chart-plot>
+              <svg class="chart-svg" viewBox="0 0 720 240" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="fillGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#5CC8FF" stop-opacity=".32" />
+                    <stop offset="100%" stop-color="#5CC8FF" stop-opacity="0" />
+                  </linearGradient>
+                </defs>
+                <g data-chart-bands></g>
+                <path data-chart-fill fill="url(#fillGrad)" d="" />
+                <path data-chart-line fill="none" stroke="#5CC8FF" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" d="" />
+                <line data-chart-rule x1="0" y1="0" x2="0" y2="240" stroke="rgb(255 255 255 / .35)" stroke-width="1" stroke-dasharray="4 4" opacity="0" />
+                <circle data-chart-head r="4.5" fill="#5CC8FF" cx="0" cy="0" opacity="0" />
+              </svg>
+              <div class="chart-bandrow" data-chart-labels></div>
+              <div class="chart-readout" data-chart-readout hidden><b data-chart-value>—</b><span data-chart-screen>—</span></div>
+            </div>
+            <ul class="chart-stats">
+              <li><span>Minimum</span><b data-chart-min>—</b></li>
+              <li><span>Average</span><b data-chart-avg>—</b></li>
+              <li><span>Peak</span><b data-chart-peak>—</b></li>
+              <li><span>Samples</span><b data-chart-count>—</b></li>
+            </ul>
+          </div>
         </div>
+
         <div class="sec-head center">
           <h2 id="live-title" class="rise" style="--d:.08s">A leak looks like a staircase.</h2>
-          <p class="rise" style="--d:.14s">Every reading is charted as it arrives and the timeline is banded by screen, so a step that never comes back down is pinned to the screen that caused it. Hover the chart to scrub the session.</p>
+          <p class="rise" style="--d:.14s">This is the window, drawing a real session: live tiles, a chart banded by the screen that was on the device, and a warning the moment the app starts climbing and not coming back. Hover the chart to scrub it.</p>
         </div>
       </div>
     </section>
@@ -165,24 +186,6 @@
             </tbody>
           </table>
           <p class="matrix-note">A metric a platform cannot report is never faked: the app shows the reason in place of the number — “most Android devices do not expose GPU counters to a shell user”, “simulator GPU work cannot be attributed to one app”. A missing reading is an honest blank, not a zero.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="window" class="sec sec-split reveal" aria-labelledby="window-title">
-      <div class="glow" aria-hidden="true"></div>
-      <div class="container split reverse">
-        <div class="split-copy">
-          <h2 id="window-title" class="rise">One window, the whole session.</h2>
-          <p class="rise" style="--d:.06s">Live tiles for the numbers that matter, a chart per metric banded by screen, markers you drop as you go, and a warning the moment the app starts climbing. Stop the session and it is saved, ready to reopen, diff against a baseline or hand to an AI.</p>
-          <div class="cta-row rise" style="--d:.12s">
-            <a class="btn outline" href="#features">What it measures</a>
-          </div>
-        </div>
-        <div class="split-stage">
-          <figure class="shot rise">
-            <img src="screenshot-dashboard.png" alt="The Device Performance Monitor dashboard: a shop app on a Pixel 9 Pro with memory climbing screen by screen, a leak warning and live CPU and thread tiles" width="1240" height="860" loading="lazy" />
-          </figure>
         </div>
       </div>
     </section>
