@@ -1,0 +1,307 @@
+/* Device Performance Monitor — the stages stage.css does not ship.
+   Everything here reads the palette variables, so the page retints as one. */
+
+code {
+  font-family: ui-monospace, "SF Mono", Menlo, Monaco, monospace;
+  font-size: 0.92em;
+  color: var(--accent-text);
+}
+
+/* ── the session chart ────────────────────────────────────────────────── */
+
+.chart-stage {
+  max-width: 920px;
+  margin: 0 auto 46px;
+  padding: 18px 18px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--pal-border);
+  background: linear-gradient(rgb(255 255 255 / 0.05), rgb(255 255 255 / 0.015));
+  box-shadow: 0 32px 70px -40px rgb(0 0 0 / 0.9);
+}
+
+.chart-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-size: 13px;
+}
+
+.chart-app {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--pal-text);
+}
+
+.chart-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: linear-gradient(160deg, #2fd27f, #0b7a5e);
+}
+
+.chart-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--pal-text2);
+  background: var(--pal-chip);
+  border: 1px solid var(--pal-border);
+}
+
+.chart-live::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2fd27f;
+  box-shadow: 0 0 0 0 rgb(47 210 127 / 0.5);
+  animation: chart-pulse 2s ease-out infinite;
+}
+
+.chart-live.done::before {
+  animation: none;
+}
+
+@keyframes chart-pulse {
+  70% { box-shadow: 0 0 0 7px rgb(47 210 127 / 0); }
+  100% { box-shadow: 0 0 0 0 rgb(47 210 127 / 0); }
+}
+
+.chart-plot {
+  position: relative;
+  border-radius: 14px;
+  background: rgb(0 0 0 / 0.26);
+  border: 1px solid var(--pal-rule);
+  overflow: hidden;
+  cursor: crosshair;
+}
+
+.chart-svg {
+  display: block;
+  width: 100%;
+  height: 260px;
+}
+
+.chart-bandrow {
+  position: absolute;
+  inset: 8px 0 auto 0;
+  height: 16px;
+  pointer-events: none;
+}
+
+.chart-bandrow span {
+  position: absolute;
+  top: 0;
+  padding-left: 8px;
+  font-size: 11px;
+  letter-spacing: 0.01em;
+  color: var(--pal-text3);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.chart-readout {
+  position: absolute;
+  top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 7px 11px;
+  border-radius: 10px;
+  background: rgb(10 10 20 / 0.92);
+  border: 1px solid var(--pal-border);
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.chart-readout[hidden] { display: none; }
+.chart-readout b { font-size: 14px; color: var(--pal-text); }
+.chart-readout span { font-size: 11px; color: var(--pal-text3); }
+
+.chart-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chart-stats li {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 0.03);
+}
+
+.chart-stats span {
+  font-size: 10.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--pal-text3);
+}
+
+.chart-stats b {
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  color: var(--pal-text);
+}
+
+/* ── the terminal ─────────────────────────────────────────────────────── */
+
+.term {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--pal-border);
+  background: rgb(6 6 14 / 0.92);
+  box-shadow: 0 34px 80px -44px rgb(0 0 0 / 0.95);
+}
+
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--pal-rule);
+  background: rgb(255 255 255 / 0.04);
+}
+
+.term-bar span { width: 11px; height: 11px; border-radius: 50%; background: rgb(255 255 255 / 0.18); }
+.term-bar span:first-child { background: #ff5f57; }
+.term-bar span:nth-child(2) { background: #febc2e; }
+.term-bar span:nth-child(3) { background: #28c840; }
+.term-bar em { margin-left: 8px; font-style: normal; font-size: 12px; color: var(--pal-text3); }
+
+.term-body {
+  height: 300px;
+  overflow: auto;
+  padding: 14px 16px 4px;
+  font-family: ui-monospace, "SF Mono", Menlo, Monaco, monospace;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: rgb(255 255 255 / 0.9);
+}
+
+.term-line { white-space: pre; }
+.term-line.cmd { white-space: pre-wrap; overflow-wrap: anywhere; }
+.term-line.cmd { color: #fff; }
+.term-line.dim { color: rgb(255 255 255 / 0.5); }
+.term-line.bad { color: #ff7a7a; }
+.term-line.good { color: #4fd98a; }
+
+.term-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 12px;
+  border-top: 1px solid var(--pal-rule);
+}
+
+.term-prompt { color: var(--pal-accent); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; }
+
+.term-input input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: none;
+  outline: none;
+  color: #fff;
+  font-family: ui-monospace, "SF Mono", Menlo, Monaco, monospace;
+  font-size: 13px;
+}
+
+.term-input input::placeholder { color: rgb(255 255 255 / 0.3); }
+.term-input:focus-within { background: rgb(255 255 255 / 0.03); }
+
+/* ── agent prompts ────────────────────────────────────────────────────── */
+
+.prompt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 16px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prompt-card {
+  padding: 20px 22px;
+  border-radius: 16px;
+  border: 1px solid var(--pal-border);
+  background: rgb(255 255 255 / 0.03);
+}
+
+.prompt-card h3 { margin: 0 0 8px; font-size: 16px; font-weight: 650; }
+.prompt-card p { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--pal-text2); }
+
+/* ── the brew line in the closing band ────────────────────────────────── */
+
+.brew {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  max-width: 640px;
+  margin: 20px auto 0;
+  padding: 11px 12px 11px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--pal-border);
+  background: rgb(0 0 0 / 0.3);
+  text-align: left;
+}
+
+.brew code { color: #fff; font-size: 12.5px; overflow-wrap: anywhere; }
+
+.copy-btn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--pal-border);
+  background: rgb(255 255 255 / 0.08);
+  color: rgb(255 255 255 / 0.85);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.copy-btn:hover { background: rgb(255 255 255 / 0.15); }
+.copy-btn.copied { color: #4fd98a; border-color: rgb(79 217 138 / 0.45); }
+
+@media (max-width: 900px) {
+  .chart-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .term-body { height: 250px; }
+}
+
+@media (max-width: 560px) {
+  .chart-bandrow { display: none; }
+  .brew { flex-direction: column; align-items: stretch; }
+}
+
+/* ── the one real window shot ─────────────────────────────────────────── */
+
+.shot {
+  margin: 0;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--pal-border);
+  box-shadow: 0 40px 90px -46px rgb(0 0 0 / 0.95);
+  background: rgb(0 0 0 / 0.3);
+}
+
+.shot img { display: block; width: 100%; height: auto; }

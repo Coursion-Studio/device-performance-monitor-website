@@ -2,502 +2,248 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Device Performance Monitor — live memory, CPU &amp; FPS, AI analysis, a device toolbox and a dpm CLI for Mac</title>
-  <meta name="description" content="A native macOS app that watches the live memory, CPU, threads and frame-rate of one app on an Android phone, an iOS Simulator, or a real iPhone or iPad — with AI session analysis and a toolbox: app bundle size &amp; build compare, startup timing, a cold-start benchmark, jank timeline, log viewer, battery reports, screenshot &amp; record, threshold alerts and a dpm command line for CI and AI agents. Nothing hard-coded." />
-  <meta property="og:title" content="Device Performance Monitor" />
-  <meta property="og:description" content="Live memory, CPU, thread and frame-rate monitoring for one app on Android, an iOS Simulator or a real iPhone/iPad — plus AI analysis and a toolbox: bundle size &amp; compare, startup timing, cold-start benchmark, jank, logs, battery reports, capture, alerts and a dpm CLI for CI and AI agents." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Device Performance Monitor — see what your app does to a device</title>
+  <meta name="description" content="A native macOS app that watches the live memory, CPU, threads and frame rate of one app on an Android phone, an iOS Simulator or a real iPhone — with AI session analysis, a device toolbox and a dpm command line for CI and AI agents." />
+  <link rel="canonical" href="https://dpm.coursion.studio/" />
+  <link rel="icon" type="image/png" href="icon.png" />
+  <link rel="stylesheet" href="stage.css" />
+  <link rel="stylesheet" href="dpm.css" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://dpm.coursion.studio/" />
+  <meta property="og:title" content="Device Performance Monitor" />
+  <meta property="og:description" content="Live memory, CPU, threads and frame rate for one app on Android, an iOS Simulator or a real iPhone — plus AI analysis, seven tools and a dpm CLI for CI and AI agents." />
   <meta property="og:image" content="https://dpm.coursion.studio/screenshot-dashboard.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="icon.png" />
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    /* command snippet + install cards — small additions on top of the shared house style */
-    code {
-      font-family: ui-monospace, "SF Mono", Menlo, Monaco, monospace;
-      font-size: 0.92em;
-    }
-    .cmd {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      background: rgba(0, 0, 0, 0.28);
-      border: 1px solid var(--card-stroke);
-      border-radius: 10px;
-      padding: 12px 14px;
-      margin-top: 14px;
-      color: #fff;
-    }
-    .cmd code { white-space: normal; overflow-wrap: anywhere; }
-    .install-grid {
-      display: grid;
-      gap: 16px;
-      grid-template-columns: 1fr 1fr;
-      max-width: 860px;
-    }
-    @media (max-width: 720px) { .install-grid { grid-template-columns: 1fr; } }
-    .install-grid .card h3 { font-size: 18px; }
-    .install-grid .req { color: var(--text-tertiary); font-size: 13px; margin-top: 14px; }
-    /* Homebrew command in the hero */
-    .hero-cmd { max-width: 640px; margin: 28px auto 0; }
-    .hero-cmd-label {
-      display: block;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: var(--text-tertiary);
-      margin-bottom: 10px;
-    }
-    .hero-cmd .cmd { margin-top: 0; }
-    /* copy button inside the command box */
-    .copy-btn {
-      flex-shrink: 0;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      color: rgba(255, 255, 255, 0.85);
-      border-radius: 8px;
-      padding: 6px 10px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-    }
-    .copy-btn:hover { background: rgba(255, 255, 255, 0.15); }
-    .copy-btn svg { width: 14px; height: 14px; }
-    .copy-btn.copied { color: #34d399; border-color: rgba(52, 211, 153, 0.45); }
-    .cli-grid {
-      display: grid;
-      gap: 18px;
-      grid-template-columns: 1.15fr 1fr;
-      align-items: start;
-      margin-top: 22px;
-    }
-    .terminal {
-      background: rgba(0, 0, 0, 0.42);
-      border: 1px solid var(--card-stroke);
-      border-radius: var(--radius-card);
-      overflow: hidden;
-    }
-    .terminal-bar {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--card-stroke);
-      background: rgba(255, 255, 255, 0.04);
-    }
-    .terminal-bar span {
-      width: 11px; height: 11px; border-radius: 50%;
-      background: rgba(255, 255, 255, 0.18);
-    }
-    .terminal-bar span:first-child { background: #ff5f57; }
-    .terminal-bar span:nth-child(2) { background: #febc2e; }
-    .terminal-bar span:nth-child(3) { background: #28c840; }
-    .terminal-bar em {
-      margin-left: 8px; font-style: normal; font-size: 12px; color: var(--text-tertiary);
-    }
-    .terminal pre { margin: 0; padding: 16px 18px; overflow-x: auto; }
-    .terminal code {
-      font-family: ui-monospace, "SF Mono", Menlo, Monaco, monospace;
-      font-size: 12.5px; line-height: 1.75; color: rgba(255, 255, 255, 0.92); white-space: pre;
-    }
-    .terminal .p { color: var(--brand-blue); }
-    .terminal .dim { color: rgba(255, 255, 255, 0.45); }
-    .terminal .bad { color: #ff6b6b; }
-    .card-link { margin: 10px 0 0; }
-    .card-link a {
-      color: var(--brand-blue);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 14px;
-    }
-    .card-link a:hover { text-decoration: underline; }
-    .cli-side { display: grid; gap: 16px; }
-    .cli-side .card { margin: 0; }
-    .prompt-cmd { align-items: flex-start; }
-    .prompt-cmd code {
-      font-family: inherit; font-size: 13.5px; line-height: 1.6;
-      color: rgba(255, 255, 255, 0.82);
-    }
-    @media (max-width: 900px) { .cli-grid { grid-template-columns: 1fr; } }
-  </style>
+  <meta name="theme-color" content="#070A1C" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Device Performance Monitor",
+    "url": "https://dpm.coursion.studio/",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "macOS 14 or later",
+    "description": "Live memory, CPU, thread and frame-rate monitoring for one app on Android, an iOS Simulator or a real iPhone or iPad, with AI session analysis and a dpm command line for CI and AI agents.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "publisher": { "@type": "Organization", "name": "Coursion Studio" }
+  }
+  </script>
+  <script>document.documentElement.classList.add("js");window.__rv=setTimeout(function(){document.documentElement.classList.add("reveal-all")},4000);</script>
+  <script defer src="palettes.js"></script>
+  <script>
+    window.STAGE = {
+      download: "https://github.com/Coursion-Studio/device-performance-monitor-website/releases/latest",
+      palette: "aurora"
+    };
+  </script>
+  <script defer src="stage.js"></script>
+  <script defer src="dpm.js"></script>
 </head>
 <body>
-  <div class="bg"></div>
+  <a class="skip" href="#features">Skip to the features</a>
 
-  <div class="container">
-    <nav class="top">
-      <div class="brand">
-        <img src="icon.png" alt="Device Performance Monitor" />
-        <span>Device Performance Monitor</span>
-      </div>
-      <div class="links">
-        <a href="#showcase">Tour</a>
-        <a href="#features">Features</a>
-        <a href="#tools">Tools</a>
-        <a href="#cli">CLI</a>
-        <a href="#download">Download</a>
-      </div>
-    </nav>
+  <header class="stage-hero reveal" data-live>
+    <div class="mesh" aria-hidden="true"><i class="m1"></i><i class="m2"></i><i class="m3"></i><i class="m4"></i></div>
+    <div class="container">
+      <nav class="top">
+        <a class="brand" href="#"><img src="icon.png" alt="" width="26" height="26" /><span>Device Performance Monitor</span></a>
+        <div class="links">
+          <a href="#live">Watch it</a>
+          <a href="#features">Features</a>
+          <a href="#tools">Tools</a>
+          <a href="cli.html">CLI</a>
+          <a class="keep" href="#download">Download</a>
+        </div>
+      </nav>
 
-    <section class="hero">
-      <img class="app-icon" src="icon.png" alt="Device Performance Monitor icon" />
-      <div class="eyebrow">Native macOS · Android · iOS Simulator · iPhone &amp; iPad</div>
-      <h1>See exactly what your app<br><span class="grad">does to a device.</span></h1>
-      <p class="sub">Device Performance Monitor watches the live memory, CPU, threads and frame-rate of one app — on an Android phone, an iOS Simulator, or a real iPhone or iPad. Have an AI read the session, then reach for the built-in tools: bundle size and build compare, startup timing, a cold-start benchmark, a jank timeline, a live log viewer, battery reports, screenshot &amp; record, threshold alerts, and a <code>dpm</code> command line you can drop into CI or hand to an AI agent. You pick the platform, the device and the app inside the window. Nothing is hard-coded.</p>
-      <div class="cta-row">
-        <a class="btn primary" href="#download">Download for Mac</a>
-        <a class="btn outline" href="#showcase">Take the tour</a>
+      <div class="fan" role="img" aria-label="The Device Performance Monitor icon with its tools fanned out beneath it.">
+        <img class="fan-icon" src="icon.png" alt="" width="160" height="160" fetchpriority="high" />
+        <span class="fan-item"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#5CC8FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 4-7 5 5"/><circle cx="20" cy="12" r="1.6" fill="#5CC8FF"/></svg></span><b>Live metrics</b></span>
+        <span class="fan-item"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#9D8BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg></span><b>Bundle size</b></span>
+        <span class="fan-item"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#FFC46B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13H11l-1 9 8.5-11H12z"/></svg></span><b>Startup</b></span>
+        <span class="fan-item"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#5BE7B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 13V9M9 2h6"/></svg></span><b>Benchmark</b></span>
+        <span class="fan-item"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#FF8AB0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m6 9 3 3-3 3M13 15h4"/></svg></span><b>dpm CLI</b></span>
       </div>
-      <div class="hero-cmd">
-        <span class="hero-cmd-label">or install with Homebrew</span>
-        <div class="cmd"><code>brew install --cask coursion-studio/tools/device-performance-monitor</code><button class="copy-btn" type="button" aria-label="Copy install command"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
-      </div>
-    </section>
 
-    <div class="hero-shot-wrap">
-      <figure class="window shot-hero">
-        <img src="screenshot-dashboard.png" alt="Device Performance Monitor dashboard — a shop app on a Pixel 9 Pro, memory climbing screen by screen with a leak warning, live CPU and thread counts" />
-      </figure>
-      <div class="hero-stats">
-        <div class="stat"><strong>3</strong><span>Platforms</span></div>
-        <div class="stat"><strong>12+</strong><span>Live metrics</span></div>
-        <div class="stat"><strong>7</strong><span>Built-in tools</span></div>
-        <div class="stat"><strong>AI</strong><span>Session analysis</span></div>
+      <div class="hero-copy">
+        <h1 class="rise" style="--d:.08s">See exactly what your app<br /> does to a device.</h1>
+        <p class="sub rise" style="--d:.14s">Memory, CPU, threads and frame rate from one app on an Android phone, an iOS Simulator or a real iPhone — second by second, with the screen that caused each spike. Then let an AI read the session, or fail a build on it.</p>
+        <div class="cta-row rise" style="--d:.2s">
+          <a class="btn primary" href="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/latest" data-download>Download for Mac</a>
+          <a class="btn outline" href="#live">Watch a session</a>
+        </div>
+        <p class="req-note rise" style="--d:.24s">Free · macOS 14 or later · universal for Apple silicon and Intel</p>
       </div>
     </div>
+  </header>
 
-    <section id="showcase" class="tight">
-      <div class="showcase-intro">
-        <div class="section-label">THE TOUR</div>
-        <h2>See it before you install it.</h2>
-        <p class="lede">Memory that never comes back down, a CPU spike that lines up with a tap, a build that grew for no reason — the things you open the app to find, and the tools you reach for next.</p>
+  <main>
+    <section id="live" class="sec reveal" data-stage="chart" aria-labelledby="live-title">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="container">
+        <div class="chart-stage rise">
+          <div class="chart-head">
+            <span class="chart-app"><span class="chart-dot"></span>Shop · com.example.shop</span>
+            <span class="chart-live" data-chart-state>recording…</span>
+          </div>
+          <div class="chart-plot" data-chart-plot>
+            <svg class="chart-svg" viewBox="0 0 720 240" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="fillGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--pal-accent)" stop-opacity=".34" />
+                  <stop offset="100%" stop-color="var(--pal-accent)" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <g data-chart-bands></g>
+              <path data-chart-fill fill="url(#fillGrad)" d="" />
+              <path data-chart-line fill="none" stroke="var(--pal-accent)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" d="" />
+              <line data-chart-rule x1="0" y1="0" x2="0" y2="240" stroke="rgb(255 255 255 / .35)" stroke-width="1" stroke-dasharray="4 4" opacity="0" />
+              <circle data-chart-head r="4.5" fill="var(--pal-accent)" cx="0" cy="0" opacity="0" />
+            </svg>
+            <div class="chart-bandrow" data-chart-labels></div>
+            <div class="chart-readout" data-chart-readout hidden><b data-chart-value>—</b><span data-chart-screen>—</span></div>
+          </div>
+          <ul class="chart-stats">
+            <li><span>Minimum</span><b data-chart-min>—</b></li>
+            <li><span>Average</span><b data-chart-avg>—</b></li>
+            <li><span>Peak</span><b data-chart-peak>—</b></li>
+            <li><span>Samples</span><b data-chart-count>—</b></li>
+          </ul>
+        </div>
+        <div class="sec-head center">
+          <h2 id="live-title" class="rise" style="--d:.08s">A leak looks like a staircase.</h2>
+          <p class="rise" style="--d:.14s">Every reading is charted as it arrives and the timeline is banded by screen, so a step that never comes back down is pinned to the screen that caused it. Hover the chart to scrub the session.</p>
+        </div>
       </div>
+    </section>
 
-      <div class="showcase">
-        <div class="showcase-row">
-          <div class="showcase-copy">
-            <span class="chip chip-brand">The launcher</span>
-            <h3>One home, every tool.</h3>
-            <p>The app opens on a launcher that fits your screen. Live monitoring is the headline; seven tools sit under it, each with its own glyph, plus a Command line &amp; AI card. Press one and the window eases open straight into it.</p>
-            <ul class="pills">
-              <li>Bundle size</li><li>Startup</li><li>Benchmark</li><li>Logs</li><li>Battery</li><li>Capture</li><li>Jank</li><li>CLI</li>
-            </ul>
-          </div>
-          <figure class="window">
-            <img src="shot-launcher.png" alt="Device Performance Monitor home launcher with live monitoring, seven tool cards and a CLI &amp; AI agents card" />
-          </figure>
+    <section id="features" class="sec reveal">
+      <div class="container">
+        <div class="sec-head">
+          <h2 class="rise">Twelve live metrics, one app at a time</h2>
+          <p class="rise" style="--d:.06s">Pick the platform, the device and the app inside the window. Nothing is hard-coded to one project, and every number is the device's own.</p>
         </div>
+        <ul class="feature-grid">
+          <li class="feature-card rise" style="--d:.08s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#5CC8FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 4-7 5 5"/></svg></span><div><h3>Memory &amp; CPU <span class="tier tier-free">All platforms</span></h3><p>Total footprint, the share resident in RAM, per-process CPU and a thread count that surfaces leaks the moment it stops coming back down.</p></div></li>
+          <li class="feature-card rise" style="--d:.12s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#5BE7B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18V7M10 18V4M16 18v-8M2 18h20"/></svg></span><div><h3>Frames &amp; jank <span class="tier tier-free">All platforms</span></h3><p>Frame rate, janky-frame share and frame-time percentiles, so a stutter is a spike you can point at rather than a feeling.</p></div></li>
+          <li class="feature-card rise" style="--d:.16s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#C79BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 1.9 4.6L18.5 9l-4.6 1.9L12 15l-1.9-4.1L5.5 9l4.6-1.4z"/><path d="M19 14l.9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9z"/></svg></span><div><h3>AI session analysis <span class="tier tier-mixed">Your own key</span></h3><p>Claude, GPT or Gemini reads the run and answers in words: what leaked, which screen did it, what to change — with a per-screen diagnosis.</p></div></li>
+          <li class="feature-card rise" style="--d:.2s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#FF8AB0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h10M4 17h7"/><circle cx="19" cy="16" r="3"/></svg></span><div><h3>Screen tracking <span class="tier tier-free">Native &amp; RN</span></h3><p>Every reading is stamped with the screen the app was showing — Activities, Compose routes or React Navigation — so a spike maps to a route.</p></div></li>
+          <li class="feature-card rise" style="--d:.24s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#FFC46B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span><div><h3>Baselines &amp; alerts <span class="tier tier-free">All platforms</span></h3><p>Save a known-good run and diff against it, or set a ceiling per metric and get a notification the moment a live reading crosses it.</p></div></li>
+          <li class="feature-card rise" style="--d:.28s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#9D8BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg></span><div><h3>Exports that travel <span class="tier tier-free">All platforms</span></h3><p>CSV, JSON, Markdown, a shareable HTML report, or the charts as PNG and PDF for a ticket nobody has to re-run.</p></div></li>
+        </ul>
+      </div>
+    </section>
 
-        <div class="showcase-row reverse">
-          <div class="showcase-copy">
-            <span class="chip chip-cyan">Memory over time</span>
-            <h3>Live memory, broken down.</h3>
-            <p>The app's total footprint and the share actually resident in RAM, charted second by second with minimum, average and peak called out. Each screen gets its own band, so a step that never comes back down is pinned to the screen that caused it — and the session-change card tells you at a glance whether you finished heavier than you started.</p>
-            <ul class="pills">
-              <li>App PSS</li><li>Resident RAM</li><li>Swap</li><li>Pool breakdown</li>
-            </ul>
+    <section id="window" class="sec sec-split reveal" aria-labelledby="window-title">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="container split reverse">
+        <div class="split-copy">
+          <h2 id="window-title" class="rise">One window, the whole session.</h2>
+          <p class="rise" style="--d:.06s">Live tiles for the numbers that matter, a chart per metric banded by screen, markers you drop as you go, and a warning the moment the app starts climbing. Stop the session and it is saved, ready to reopen, diff against a baseline or hand to an AI.</p>
+          <div class="cta-row rise" style="--d:.12s">
+            <a class="btn outline" href="#features">What it measures</a>
           </div>
-          <figure class="window">
-            <img src="shot-memory.png" alt="Memory over time climbing in steps as each screen loads, banded by screen with session markers, and minimum, average and peak below" />
-          </figure>
         </div>
-
-        <div class="showcase-row">
-          <div class="showcase-copy">
-            <span class="chip chip-amber">CPU · threads · frames</span>
-            <h3>Not just memory.</h3>
-            <p>Per-process CPU as a share of a core, a live thread count that surfaces leaks the moment it stops coming back down, and frame-rate, jank and frame-time percentiles for anything that draws.</p>
-            <ul class="pills">
-              <li>App CPU</li><li>Threads</li><li>FPS</li><li>Jank %</li><li>Frame p95</li>
-            </ul>
-          </div>
-          <figure class="window">
-            <img src="shot-cpu.png" alt="CPU over time with a spike on every screen transition, banded by screen, and minimum, average and peak below" />
-          </figure>
-        </div>
-
-        <div class="showcase-row reverse">
-          <div class="showcase-copy">
-            <span class="chip chip-brand">Bundle size</span>
-            <h3>See where every byte goes.</h3>
-            <p>Drop an App Bundle and get the real per-device download — one ABI, debug symbols excluded — next to the raw file, a composition bar, a treemap you can drill into, and the biggest files. It matches Android Studio; run bundletool for the exact figure or compare two builds.</p>
-            <ul class="pills">
-              <li>Per-device estimate</li><li>Treemap</li><li>Biggest files</li><li>Build compare</li>
-            </ul>
-          </div>
-          <figure class="window">
-            <img src="shot-bundle.png" alt="App bundle size tool showing a 125 MB per-device download estimate, composition breakdown and treemap for a real .aab" />
-          </figure>
-        </div>
-
-        <div class="showcase-row">
-          <div class="showcase-copy">
-            <span class="chip chip-cyan">The dpm command line</span>
-            <h3>A real CLI, filled in for your app.</h3>
-            <p>Install <code>dpm</code> on your PATH with one button. Pick your device and app once and every example fills itself in, so what you copy runs as-is — or press play and watch it run inside the page. Every command gets an options table, required and default tags and colour-coded exit codes. Set memory and CPU budgets and <code>dpm record</code> becomes a CI gate.</p>
-            <ul class="pills">
-              <li>One-click install</li><li>Filled-in examples</li><li>Run in place</li><li>--max-app-memory</li><li>Exit codes</li>
-            </ul>
-          </div>
-          <figure class="window">
-            <img src="shot-cli.png" alt="The CLI and AI agents settings page: dpm installed on the PATH, command tabs and the dpm record options table with required and default tags" />
-          </figure>
-        </div>
-
-        <div class="showcase-row reverse">
-          <div class="showcase-copy">
-            <span class="chip chip-amber">With an AI agent</span>
-            <h3>Hand your app's numbers to an agent.</h3>
-            <p>Four copyable prompts for Claude Code, Codex or Cursor: check a flow for memory leaks, compare before and after a change, add a CI performance gate, or compare battery drain across branches — each already naming your package. Or export the whole reference into your repo's <code>AGENTS.md</code> so the agent needs no prompt at all.</p>
-            <ul class="pills">
-              <li>Memory leaks</li><li>Before / after</li><li>CI gate</li><li>AGENTS.md export</li>
-            </ul>
-          </div>
-          <figure class="window">
-            <img src="shot-ai-prompts.png" alt="Copyable AI-agent prompts filled in with the chosen device and package, above an export of the whole reference for AGENTS.md" />
-          </figure>
-        </div>
-
-        <div class="showcase-row">
-          <div class="showcase-copy">
-            <span class="chip chip-brand">Pick your target</span>
-            <h3>Point it at anything.</h3>
-            <p>Start by choosing what to watch — an Android phone over adb, an iOS Simulator, or a real iPhone or iPad. The app finds ready devices for you; nothing is hard-coded to one project.</p>
-            <ul class="pills">
-              <li>Android</li><li>iOS Simulator</li><li>iPhone &amp; iPad</li>
-            </ul>
-          </div>
-          <figure class="window">
-            <img src="shot-setup.png" alt="Setup step choosing between Android, iOS Simulator, and a real iPhone or iPad" />
+        <div class="split-stage">
+          <figure class="shot rise">
+            <img src="screenshot-dashboard.png" alt="The Device Performance Monitor dashboard: a shop app on a Pixel 9 Pro with memory climbing screen by screen, a leak warning and live CPU and thread tiles" width="1240" height="860" loading="lazy" />
           </figure>
         </div>
       </div>
     </section>
 
-    <section id="features">
-      <div class="section-label">FEATURES</div>
-      <h2>Every number, one app, live.</h2>
-      <p class="lede">One app at a time, sampled once a second, with only the metrics you chose fetched — so the tool never distorts what it is measuring.</p>
-
-      <div class="grid">
-        <div class="card">
-          <div class="tile c-violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="9" rx="1.5"/><path d="M6 8v9M10 8v9M14 8v9M18 8v9M5 20v-3M9 20v-3M15 20v-3M19 20v-3"/></svg></div>
-          <h3>Live memory</h3>
-          <p>App PSS, resident and swap, plus the full pool breakdown — native heap, Java heap, graphics, code — updated every second.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg></div>
-          <h3>CPU &amp; threads</h3>
-          <p>Per-process CPU and a live thread count, read straight from <code>/proc</code> and differenced tick to tick.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"/></svg></div>
-          <h3>Frames &amp; jank</h3>
-          <p>Frames per second from SurfaceFlinger — even for a SurfaceView game — with jank percentage and frame-time p95 from gfxinfo.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.19M15 6h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-3.19"/><path d="M23 13v-2"/><path d="M11 6 7 12h6l-4 6"/></svg></div>
-          <h3>Battery &amp; network</h3>
-          <p>Battery level, temperature and current draw, plus per-app received and sent throughput.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
-          <h3>Any target</h3>
-          <p>One Android phone over adb, an iOS Simulator, or a real iPhone or iPad — chosen in the window, nothing hard-coded.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 1.9 4.6L18.5 9l-4.6 1.9L12 15l-1.9-4.1L5.5 9l4.6-1.4z"/><path d="M19 14l.9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9z"/></svg></div>
-          <h3>AI session analysis</h3>
-          <p>Have Claude, GPT, or Gemini read a session — a plain-language summary, per-screen diagnosis and fixes, a worst-screens ranking and anomaly flags, with your own API key.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
-          <h3>Screen tracking</h3>
-          <p>See which screen the app was showing for every reading — native and React Native — so a spike or leak is pinned to the route that caused it.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98M15.41 6.51 8.59 10.49"/></svg></div>
-          <h3>Export &amp; baselines</h3>
-          <p>Save a session as CSV, JSON, Markdown, a shareable HTML report, or the charts as PNG or PDF — and set a run as a baseline to diff future runs against it.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg></div>
-          <h3>Session history</h3>
-          <p>Every stopped session is saved automatically, so you can reopen an earlier run and analyze or compare it later — even after relaunching.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20"/></svg></div>
-          <h3>Speaks your language</h3>
-          <p>English, Türkçe, Español, Deutsch and Français — switch in Settings and the interface re-localizes live, no relaunch.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="tools">
-      <div class="section-label">THE TOOLBOX</div>
-      <h2>More than a monitor.</h2>
-      <p class="lede">A hub of standalone tools sits alongside live monitoring — pick one from the Home launcher and get to work. Seven full tools, threshold alerts and a <code>dpm</code> command line, with more landing over time.</p>
-
-      <div class="grid">
-        <div class="card">
-          <div class="tile c-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg></div>
-          <h3>App bundle size</h3>
-          <p>Drop an <code>.apk</code>, <code>.aab</code> or <code>.ipa</code> and see where its bytes go — a composition bar, a category breakdown, a treemap and the biggest files. For an App Bundle it estimates the real per-device download (one ABI, debug symbols excluded) and matches Android Studio; run bundletool for the exact figure, <strong>compare two builds</strong> file by file, or ask an AI how to shrink it.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg></div>
-          <h3>Startup timing</h3>
-          <p>Cold and warm launch times on Android, an iOS Simulator or a real iPhone — batched across runs and charted with averages, so a regression in first-frame time is obvious. Pick the app from the installed list instead of typing an identifier.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="8"/><path d="M12 14V10M10 2h4M12 2v4"/></svg></div>
-          <h3>Cold-start benchmark</h3>
-          <p>Measure Android cold start the way Macrobenchmark does — over adb, no Gradle module or test needed. Pick a compilation profile (none, partial or full), and it recompiles, warms up, then times many launches and reports the <strong>distribution</strong> — median, p90 and p95 — with a stable-vs-noisy read.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2 6 4-14 2 8h3M19 12h2"/></svg></div>
-          <h3>Jank timeline</h3>
-          <p>Per-frame render times captured from gfxinfo, with janky and frozen frames called out and the p95 frame time — so a stutter is a spike you can point at, not a feeling.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div>
-          <h3>Log viewer</h3>
-          <p>Stream live device logs — logcat, a simulator's log or an iPhone's syslog — with a text filter and a minimum level, colored by severity, follow the tail, and save the filtered lines to a file.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2M6 10l3 4h-2l1 2"/></svg></div>
-          <h3>Battery &amp; thermal</h3>
-          <p>Track charge, temperature, charging and thermal state over a session with a derived drain rate. Save a labeled report, auto-record for a set duration, then <strong>compare two runs</strong> — a branch against main, or release against release — with the deltas and a plain verdict.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3.5"/></svg></div>
-          <h3>Screenshot &amp; record</h3>
-          <p>Grab a device screenshot (preview then save) or a screen recording — for Android and the iOS Simulator — without leaving the app.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m6 9 3 3-3 3M13 15h4"/></svg></div>
-          <h3>dpm CLI &amp; CI</h3>
-          <p>The app doubles as a <code>dpm</code> command line, installed on your PATH with one click. <code>dpm record</code> samples an app without a window, writes a min/avg/max summary and fails the build on a memory or CPU budget; <code>dpm battery</code> captures a labeled report per branch; <code>dpm devices</code> and <code>dpm apps</code> find what to point it at.</p>
-          <p class="card-link"><a href="cli.html">Read the full reference →</a></p>
-        </div>
-        <div class="card">
-          <div class="tile c-violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 1.9 4.6L18.5 9l-4.6 1.9L12 15l-1.9-4.1L5.5 9l4.6-1.4z"/><path d="M19 14l.9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9z"/></svg></div>
-          <h3>Prompts for your AI agent</h3>
-          <p>Copy a ready-made prompt into Claude Code, Codex or Cursor — check a flow for leaks, compare before and after a change, add a CI gate, or compare battery drain across branches. The agent runs <code>dpm</code> and reads the JSON back to you, or you can export the whole reference into <code>AGENTS.md</code>.</p>
-          <p class="card-link"><a href="cli.html#agent">See the prompts →</a></p>
-        </div>
-        <div class="card">
-          <div class="tile c-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
-          <h3>Threshold alerts</h3>
-          <p>Set a ceiling or floor per metric — app memory over 400 MB, FPS under 45 — and get a system and in-window notification the moment a live reading crosses it.</p>
-        </div>
-      </div>
-
-    </section>
-
-    <hr class="sep" />
-
-    <hr class="sep" />
-
-    <section id="cli">
-      <div class="section-label">COMMAND LINE</div>
-      <h2>Fail the build before your users feel it.</h2>
-      <p class="lede">The same app, headless. Point <code>dpm record</code> at a device, give it a budget, and CI gets an exit code — plus a JSON summary to keep.</p>
-
-      <div class="cli-grid">
-        <div class="terminal">
-          <div class="terminal-bar"><span></span><span></span><span></span><em>zsh — dpm</em></div>
-<pre><code><span class="p">$</span> dpm devices
-<span class="dim">PLATFORM   SERIAL          MODEL        STATE</span>
-android    39021FDJH00TK9  Pixel 9 Pro  ready
-
-<span class="p">$</span> dpm record --platform android --package com.example.shop \
-    --duration 120 --max-app-memory 400 --out perf.json
-<span class="dim">dpm record: sampling com.example.shop for 120s every 1s…</span>
-<span class="dim">dpm record: wrote 120 samples · app memory avg 312 / peak 441 MB · CPU avg 18%</span>
-<span class="bad">dpm record: FAIL — peak app memory 441 MB exceeds 400 MB</span>
-<span class="p">$</span> echo $?
-<span class="bad">1</span>  <span class="dim"># the build stops here</span></code></pre>
-        </div>
-
-        <div class="cli-side">
-          <div class="card">
-            <h3>Hand it to an agent</h3>
-            <p>Paste this into Claude Code, Codex or Cursor — it runs <code>dpm</code> on your Mac and reads the numbers back to you.</p>
-            <div class="cmd prompt-cmd"><code>Use the dpm CLI (run `dpm help record` first). Run `dpm devices` to find my device, then record com.example.app for 120 seconds with `dpm record --platform android --package com.example.app --duration 120 --out session.json` while I use the app. When it finishes, read the summary in session.json and tell me whether app memory kept climbing or came back down, with the average and peak in MB.</code><button class="copy-btn" type="button" aria-label="Copy agent prompt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+    <section id="cli" class="sec sec-split reveal" data-stage="terminal" aria-labelledby="cli-title">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="container split">
+        <div class="split-copy">
+          <h2 id="cli-title" class="rise">The same app, headless.</h2>
+          <p class="rise" style="--d:.06s">Install <code>dpm</code> on your PATH with one button. Give it a device and a package and it samples without a window, writes JSON, and exits non-zero when a budget is blown — so CI fails the build and an AI agent reads the numbers back to you.</p>
+          <p class="aside rise" style="--d:.1s">This terminal answers real commands. Try <code>dpm devices</code>, <code>dpm apps</code>, <code>dpm record</code> or <code>dpm help</code>.</p>
+          <div class="cta-row rise" style="--d:.14s">
+            <a class="btn outline" href="cli.html">Full CLI reference</a>
           </div>
-          <div class="card">
-            <h3>Or teach the repo once</h3>
-            <p>Export every command, flag and exit code into <code>AGENTS.md</code> — from the app, or straight off this site.</p>
-            <div class="cmd"><code>curl -s https://dpm.coursion.studio/cli.md &gt;&gt; AGENTS.md</code><button class="copy-btn" type="button" aria-label="Copy curl command"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
-            <div class="cta-row" style="justify-content:flex-start;margin-top:14px;">
-              <a class="btn outline" href="cli.html">Full CLI reference</a>
+        </div>
+        <div class="split-stage">
+          <div class="term rise" data-term>
+            <div class="term-bar"><span></span><span></span><span></span><em>zsh — dpm</em></div>
+            <div class="term-body" data-term-body></div>
+            <div class="term-input">
+              <span class="term-prompt">$</span>
+              <input data-term-input type="text" spellcheck="false" autocomplete="off" aria-label="Type a dpm command" placeholder="dpm devices" />
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="download">
-      <div class="section-label">DOWNLOAD</div>
-      <h2>Free. Universal. Auto-updating.</h2>
-      <p class="lede">A signed, universal build for Apple silicon and Intel that updates itself in place.</p>
-
-      <div class="install-grid">
-        <div class="card">
-          <div class="tile c-violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg></div>
-          <h3>Direct download</h3>
-          <p>Grab the latest notarized disk image and drag it to Applications.</p>
-          <div class="cta-row" style="justify-content:flex-start;margin-top:14px;">
-            <a class="btn primary" href="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/latest">Download the DMG</a>
-          </div>
+    <section id="agents" class="sec reveal" aria-labelledby="agents-title">
+      <div class="container">
+        <div class="sec-head center">
+          <h2 id="agents-title" class="rise">Hand it to Claude Code, Codex or Cursor.</h2>
+          <p class="rise" style="--d:.06s">The app ships ready-made prompts that already name your device and package. The agent runs <code>dpm</code> on your Mac and reads the JSON back to you — or you drop the whole reference into your repo's <code>AGENTS.md</code> and it needs no prompt at all.</p>
         </div>
-        <div class="card">
-          <div class="tile c-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 17 6-6-6-6"/><path d="M12 19h8"/></svg></div>
-          <h3>Homebrew</h3>
-          <p>Prefer the command line? Install and upgrade it with a cask.</p>
-          <div class="cmd"><code>brew install --cask coursion-studio/tools/device-performance-monitor</code><button class="copy-btn" type="button" aria-label="Copy install command"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div>
+        <ul class="prompt-grid">
+          <li class="prompt-card rise" style="--d:.08s"><h3>Check a flow for leaks</h3><p>“Record <code>com.example.app</code> for 120 seconds while I use it, then tell me whether memory kept climbing, with the average and peak.”</p></li>
+          <li class="prompt-card rise" style="--d:.12s"><h3>Compare before and after</h3><p>“Record my branch, stash the changes, rebuild, record again, and give me a table of memory and CPU with the difference.”</p></li>
+          <li class="prompt-card rise" style="--d:.16s"><h3>Gate the build</h3><p>“Add a CI step that runs <code>dpm record</code> with a 400 MB budget, fails the job on exit 1 and uploads the JSON.”</p></li>
+        </ul>
+        <div class="cta-row center rise" style="--d:.2s">
+          <a class="btn outline" href="cli.md">Read the agent reference</a>
         </div>
       </div>
-      <p class="req" style="color:var(--text-tertiary);font-size:13px;margin-top:18px;">Requires macOS 14 (Sonoma) or later, universal for Apple silicon and Intel. Android monitoring needs <code>adb</code>; iOS monitoring (Simulator or a real iPhone/iPad) needs Xcode's command-line tools. The bundle-size tool works on its own; its exact per-device figure optionally uses <code>bundletool</code>, and AI analysis uses your own Claude, OpenAI or Gemini key. The same app doubles as a <code>dpm</code> command line for CI and AI agents.</p>
     </section>
 
+    <section id="tools" class="sec reveal">
+      <div class="container">
+        <div class="sec-head">
+          <h2 class="rise">Seven tools around the monitor</h2>
+          <p class="rise" style="--d:.06s">Live monitoring is the headline. The Home launcher opens the rest — each one a full tool, not a tab.</p>
+        </div>
+        <ul class="feature-grid">
+          <li class="feature-card rise" style="--d:.08s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#9D8BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg></span><div><h3>App bundle size</h3><p>Where an <code>.apk</code>, <code>.aab</code> or <code>.ipa</code> spends its bytes — breakdown, treemap, the real per-device download, and a file-by-file compare of two builds.</p></div></li>
+          <li class="feature-card rise" style="--d:.12s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#FFC46B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13H11l-1 9 8.5-11H12z"/></svg></span><div><h3>Startup timing</h3><p>Cold and warm launch times, batched across runs and charted with averages, so a regression in first-frame time is obvious.</p></div></li>
+          <li class="feature-card rise" style="--d:.16s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#5BE7B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 13V9M9 2h6"/></svg></span><div><h3>Cold-start benchmark</h3><p>Android cold start the way Macrobenchmark measures it — over adb, no Gradle module — reported as a distribution with a stable-vs-noisy read.</p></div></li>
+          <li class="feature-card rise" style="--d:.2s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#5CC8FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span><div><h3>Log viewer</h3><p>Live logcat, a simulator's log or an iPhone's syslog — filtered, coloured by severity, following the tail, saved to a file.</p></div></li>
+          <li class="feature-card rise" style="--d:.24s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#5BE7B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="17" height="10" rx="3"/><path d="M22 11v2"/><path d="m11 9-2 3h3l-2 3"/></svg></span><div><h3>Battery &amp; thermal</h3><p>Charge, temperature and thermal state over a session, with a derived drain rate and two runs compared side by side.</p></div></li>
+          <li class="feature-card rise" style="--d:.28s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#FF8AB0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3.5"/></svg></span><div><h3>Screenshot &amp; record</h3><p>A device screenshot or a screen recording, previewed then saved, without leaving the app.</p></div></li>
+        </ul>
+        <ul class="trust">
+          <li class="rise" style="--d:.06s"><b>Native SwiftUI</b><span>No Electron, no web views. It feels like macOS because it is.</span></li>
+          <li class="rise" style="--d:.1s"><b>Runs on your Mac</b><span>Readings never leave your machine. AI analysis is opt-in, with your own API key.</span></li>
+          <li class="rise" style="--d:.14s"><b>Signed end to end</b><span>Developer ID signed, notarized by Apple, with signed automatic updates.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="container">
+      <section id="download" class="cta-band">
+        <h2>Point it at a device and press start.</h2>
+        <p class="lede">Free, universal for Apple silicon and Intel, and it updates itself in place. Android monitoring needs <code>adb</code>; iOS needs Xcode's command-line tools.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/latest" data-download>Download for Mac</a>
+          <a class="btn outline" href="cli.html">Read the CLI reference</a>
+        </div>
+        <div class="brew">
+          <code>brew install --cask coursion-studio/tools/device-performance-monitor</code>
+          <button class="copy-btn" type="button" aria-label="Copy the Homebrew command"><span>Copy</span></button>
+        </div>
+        <p class="req-note">macOS 14 or later · Developer ID signed &amp; notarized</p>
+      </section>
+    </div>
+  </main>
+
+  <div class="container">
     <footer>
       <div class="links">
-        <a href="cli.html">dpm CLI reference</a>
-        <a href="https://coursion.studio">Coursion</a>
+        <a href="#download">Download</a>
+        <a href="cli.html">dpm CLI</a>
         <a href="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/latest">Releases</a>
+        <a href="https://coursion.studio">Coursion</a>
         <a href="mailto:support@coursion.studio">Support</a>
       </div>
-      <div>© 2026 Coursion. All rights reserved.</div>
+      <div>© 2026 Coursion Studio</div>
     </footer>
   </div>
-  <script>
-    document.querySelectorAll(".copy-btn").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        var code = btn.parentElement.querySelector("code");
-        if (!code) return;
-        navigator.clipboard.writeText(code.textContent.trim()).then(function () {
-          btn.classList.add("copied");
-          var label = btn.querySelector("span");
-          var prev = label ? label.textContent : "";
-          if (label) label.textContent = "Copied";
-          setTimeout(function () {
-            btn.classList.remove("copied");
-            if (label) label.textContent = prev;
-          }, 1600);
-        });
-      });
-    });
-  </script>
 </body>
 </html>
