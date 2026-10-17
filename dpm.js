@@ -75,9 +75,9 @@
     simulator: {
       frame: "is-simulator",
       device: "iPhone 17 Pro",
-      serial: "3CFEE594-803A-43A6",
+      serial: "B1C4E8F2-27A9-4E60",
       screenSuffix: "",
-      command: "xcrun simctl spawn 3CFEE594 footprint com.example.shop",
+      command: "xcrun simctl spawn B1C4E8F2 footprint com.example.shop",
       note: "A simulator shares your Mac's CPU and GPU, so frame rate would be your machine's, not a phone's. It is left blank.",
       scale: 1.22,
       tiles: [
@@ -89,8 +89,8 @@
     },
     iosDevice: {
       frame: "is-iphone",
-      device: "Kuray's iPhone",
-      serial: "00008130-001638A9",
+      device: "iPhone 17",
+      serial: "00008120-000A4D11",
       screenSuffix: "",
       command: "pymobiledevice3 developer dvt sysmon process monitor",
       note: "Screens come from the app's own DPM_SCREEN log lines — iOS has no non-invasive way to ask what is on screen.",
@@ -347,8 +347,8 @@
 
   const DEVICES = [
     ["android", "39021FDJH00TK9", "Pixel 9 Pro", "ready"],
-    ["simulator", "3CFEE594-803A-43A6", "iPhone 17 Pro", "ready"],
-    ["iosDevice", "00008130-001638A9", "Kuray's iPhone", "ready"],
+    ["simulator", "B1C4E8F2-27A9-4E60", "iPhone 17 Pro", "ready"],
+    ["iosDevice", "00008120-000A4D11", "iPhone 17", "ready"],
   ];
 
   const APPS = [
