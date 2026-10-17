@@ -8,7 +8,7 @@
   <link rel="canonical" href="https://dpm.coursion.studio/" />
   <link rel="icon" type="image/png" href="icon.png" />
   <link rel="stylesheet" href="stage.css?v=1d5ceac846" />
-  <link rel="stylesheet" href="dpm.css?v=a88586c42a" />
+  <link rel="stylesheet" href="dpm.css?v=30ded7b34a" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://dpm.coursion.studio/" />
   <meta property="og:title" content="Device Performance Monitor" />
@@ -51,7 +51,7 @@
         <div class="links">
           <a href="#live">Watch it</a>
           <a href="#features">Features</a>
-          <a href="#tools">Tools</a>
+          <a href="#features">Tools</a>
           <a href="cli.html">CLI</a>
           <a class="keep" href="#download">Download</a>
         </div>
@@ -160,33 +160,101 @@
       </div>
     </section>
 
-    <section id="features" class="sec reveal">
+    <section id="features" class="sec reveal" data-live>
       <div class="container">
-        <div class="sec-head">
-          <h2 class="rise">What it can actually read, per platform</h2>
-          <p class="rise" style="--d:.06s">Android goes over <code>adb</code>, the Simulator over <code>simctl</code>, a real iPhone over <code>pymobiledevice3</code> — each gives up a different set of numbers. This is the whole matrix, including the gaps.</p>
+        <div class="sec-head center">
+          <h2 class="rise">Eight tools, one window</h2>
+          <p class="rise" style="--d:.06s">Live monitoring is the headline. Everything else opens from Home — each a full tool, not a tab.</p>
         </div>
-        <div class="matrix rise" style="--d:.08s">
-          <table>
-            <thead>
-              <tr><th scope="col">Metric</th><th scope="col">Android</th><th scope="col">Simulator</th><th scope="col">iPhone</th></tr>
-            </thead>
-            <tbody>
-              <tr><th scope="row">App memory <em>MB</em></th><td class="y">●</td><td class="y">●</td><td class="y">●</td></tr>
-              <tr><th scope="row">In RAM vs compressed <em>MB</em></th><td class="y">●</td><td class="y">●</td><td class="y">●</td></tr>
-              <tr><th scope="row">App CPU <em>% of a core</em></th><td class="y">●</td><td class="y">●</td><td class="y">●</td></tr>
-              <tr><th scope="row">System CPU <em>%</em></th><td class="y">●</td><td class="n">—</td><td class="n">—</td></tr>
-              <tr><th scope="row">Threads <em>count</em></th><td class="y">●</td><td class="y">●</td><td class="y">●</td></tr>
-              <tr><th scope="row">Disk read &amp; write <em>KB/s</em></th><td class="y">●</td><td class="n">—</td><td class="y">●</td></tr>
-              <tr><th scope="row">Frames per second <em>fps</em></th><td class="y">●</td><td class="n">—</td><td class="n">—</td></tr>
-              <tr><th scope="row">Janky frames <em>%</em></th><td class="y">●</td><td class="n">—</td><td class="n">—</td></tr>
-              <tr><th scope="row">Frame time p95 <em>ms</em></th><td class="y">●</td><td class="n">—</td><td class="n">—</td></tr>
-              <tr><th scope="row">Battery &amp; thermal <em>%, °C</em></th><td class="y">●</td><td class="n">—</td><td class="n">—</td></tr>
-              <tr><th scope="row">Network in &amp; out <em>KB/s</em></th><td class="y">●</td><td class="n">—</td><td class="n">—</td></tr>
-            </tbody>
-          </table>
-          <p class="matrix-note">A metric a platform cannot report is never faked: the app shows the reason in place of the number — “most Android devices do not expose GPU counters to a shell user”, “simulator GPU work cannot be attributed to one app”. A missing reading is an honest blank, not a zero.</p>
-        </div>
+        <ul class="demo-grid">
+          <li class="demo-card rise" style="--d:.06s">
+            <div class="demo demo-bundle" aria-hidden="true">
+              <span class="b b1"></span><span class="b b2"></span><span class="b b3"></span>
+              <span class="b b4"></span><span class="b b5"></span><span class="b b6"></span>
+            </div>
+            <h3>App bundle size</h3>
+            <p>Where an <code>.apk</code>, <code>.aab</code> or <code>.ipa</code> spends its bytes — and the diff against your last build.</p>
+          </li>
+          <li class="demo-card rise" style="--d:.1s">
+            <div class="demo demo-startup" aria-hidden="true">
+              <span class="run"><i style="--w:62%"></i><em>412 ms</em></span>
+              <span class="run"><i style="--w:78%"></i><em>518 ms</em></span>
+              <span class="run"><i style="--w:47%"></i><em>309 ms</em></span>
+            </div>
+            <h3>Startup timing</h3>
+            <p>Cold and warm launches, batched across runs and averaged.</p>
+          </li>
+          <li class="demo-card rise" style="--d:.14s">
+            <div class="demo demo-bench" aria-hidden="true">
+              <span class="bar" style="--h:22%"></span><span class="bar" style="--h:38%"></span>
+              <span class="bar" style="--h:64%"></span><span class="bar" style="--h:92%"></span>
+              <span class="bar" style="--h:70%"></span><span class="bar" style="--h:44%"></span>
+              <span class="bar" style="--h:28%"></span><span class="bar" style="--h:18%"></span>
+              <span class="p95"><em>p95</em></span>
+            </div>
+            <h3>Cold-start benchmark</h3>
+            <p>Many launches, reported as a distribution with a stable-vs-noisy read.</p>
+          </li>
+          <li class="demo-card rise" style="--d:.18s">
+            <div class="demo demo-jank" aria-hidden="true">
+              <span class="track">
+                <i></i><i></i><i class="bad"></i><i></i><i></i><i></i><i class="bad"></i><i></i>
+                <i></i><i></i><i></i><i class="bad"></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i class="bad"></i><i></i><i></i><i></i><i></i><i></i>
+              </span>
+              <span class="line"></span>
+            </div>
+            <h3>Jank timeline</h3>
+            <p>Per-frame render times, with the frames that missed called out.</p>
+          </li>
+          <li class="demo-card rise" style="--d:.22s">
+            <div class="demo demo-battery" aria-hidden="true">
+              <span class="cell"><i></i></span>
+              <svg viewBox="0 0 120 40" preserveAspectRatio="none"><path d="M2 34 L28 30 L54 24 L80 15 L118 6" fill="none" stroke="#FF8AB0" stroke-width="2.5" stroke-linecap="round" /></svg>
+              <em>38 °C</em>
+            </div>
+            <h3>Battery &amp; thermal</h3>
+            <p>Drain rate, temperature and thermal state — two runs compared.</p>
+          </li>
+          <li class="demo-card rise" style="--d:.26s">
+            <div class="demo demo-logs" aria-hidden="true">
+              <span class="feed">
+                <i><b class="e">E</b>FATAL EXCEPTION: main</i>
+                <i><b class="w">W</b>Skipped 41 frames</i>
+                <i><b class="i">I</b>Checkout opened</i>
+                <i><b class="d">D</b>cart synced · 12 items</i>
+                <i><b class="w">W</b>GC freed 18 MB</i>
+                <i><b class="i">I</b>ProductList attached</i>
+              </span>
+            </div>
+            <h3>Log viewer</h3>
+            <p>logcat, a simulator's log or an iPhone's syslog — filtered and followed.</p>
+          </li>
+          <li class="demo-card rise" style="--d:.3s">
+            <div class="demo demo-ai" aria-hidden="true">
+              <span class="verdict"><b>Leak on Checkout</b><span class="typing"></span></span>
+              <span class="chips"><i>+421 MB</i><i>R² 0.97</i><i>4 findings</i></span>
+            </div>
+            <h3>AI session analysis</h3>
+            <p>Claude, GPT or Gemini reads the run and answers in words.</p>
+          </li>
+          <li class="demo-card rise" style="--d:.34s">
+            <div class="demo demo-alert" aria-hidden="true">
+              <svg viewBox="0 0 160 60" preserveAspectRatio="none">
+                <line x1="0" y1="18" x2="160" y2="18" stroke="rgb(255 255 255 / .28)" stroke-width="1.5" stroke-dasharray="5 5" />
+                <path d="M2 52 L26 48 L50 44 L74 36 L98 26 L122 14 L158 8" fill="none" stroke="#FFC46B" stroke-width="2.5" stroke-linecap="round" />
+              </svg>
+              <span class="toast"><b>App memory over 400 MB</b></span>
+            </div>
+            <h3>Threshold alerts</h3>
+            <p>A ceiling per metric, and a notification the moment it trips.</p>
+          </li>
+        </ul>
+        <ul class="trust">
+          <li class="rise" style="--d:.06s"><b>Native SwiftUI</b><span>No Electron, no web views. It feels like macOS because it is.</span></li>
+          <li class="rise" style="--d:.1s"><b>Runs on your Mac</b><span>Readings never leave your machine. AI analysis is opt-in, with your own key.</span></li>
+          <li class="rise" style="--d:.14s"><b>Signed end to end</b><span>Developer ID signed, notarized by Apple, with signed automatic updates.</span></li>
+        </ul>
       </div>
     </section>
 
@@ -228,28 +296,6 @@
         <div class="cta-row center rise" style="--d:.2s">
           <a class="btn outline" href="cli.md">Read the agent reference</a>
         </div>
-      </div>
-    </section>
-
-    <section id="tools" class="sec reveal">
-      <div class="container">
-        <div class="sec-head">
-          <h2 class="rise">Seven tools around the monitor</h2>
-          <p class="rise" style="--d:.06s">Live monitoring is the headline. The Home launcher opens the rest — each one a full tool, not a tab.</p>
-        </div>
-        <ul class="feature-grid">
-          <li class="feature-card rise" style="--d:.08s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#9D8BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg></span><div><h3>App bundle size</h3><p>Where an <code>.apk</code>, <code>.aab</code> or <code>.ipa</code> spends its bytes — breakdown, treemap, the real per-device download, and a file-by-file compare of two builds.</p></div></li>
-          <li class="feature-card rise" style="--d:.12s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#FFC46B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13H11l-1 9 8.5-11H12z"/></svg></span><div><h3>Startup timing</h3><p>Cold and warm launch times, batched across runs and charted with averages, so a regression in first-frame time is obvious.</p></div></li>
-          <li class="feature-card rise" style="--d:.16s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#5BE7B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 13V9M9 2h6"/></svg></span><div><h3>Cold-start benchmark</h3><p>Android cold start the way Macrobenchmark measures it — over adb, no Gradle module — reported as a distribution with a stable-vs-noisy read.</p></div></li>
-          <li class="feature-card rise" style="--d:.2s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#5CC8FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span><div><h3>Log viewer</h3><p>Live logcat, a simulator's log or an iPhone's syslog — filtered, coloured by severity, following the tail, saved to a file.</p></div></li>
-          <li class="feature-card rise" style="--d:.24s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#5BE7B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="17" height="10" rx="3"/><path d="M22 11v2"/><path d="m11 9-2 3h3l-2 3"/></svg></span><div><h3>Battery &amp; thermal</h3><p>Charge, temperature and thermal state over a session, with a derived drain rate and two runs compared side by side.</p></div></li>
-          <li class="feature-card rise" style="--d:.28s"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#FF8AB0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3.5"/></svg></span><div><h3>Screenshot &amp; record</h3><p>A device screenshot or a screen recording, previewed then saved, without leaving the app.</p></div></li>
-        </ul>
-        <ul class="trust">
-          <li class="rise" style="--d:.06s"><b>Native SwiftUI</b><span>No Electron, no web views. It feels like macOS because it is.</span></li>
-          <li class="rise" style="--d:.1s"><b>Runs on your Mac</b><span>Readings never leave your machine. AI analysis is opt-in, with your own API key.</span></li>
-          <li class="rise" style="--d:.14s"><b>Signed end to end</b><span>Developer ID signed, notarized by Apple, with signed automatic updates.</span></li>
-        </ul>
       </div>
     </section>
 
