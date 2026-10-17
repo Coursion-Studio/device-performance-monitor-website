@@ -34,7 +34,15 @@
         if (loading) memory += screen.retained * 0.3 + (rand() - 0.5) * 1.2 + 1.2;
         else if (tick === 9) memory -= screen.retained * 0.52;
         else memory += (rand() - 0.5) * 0.44 + 0.18;
-        points.push({ mb: memory, screen: screen.name, band: index });
+        const spike = loading ? 74 * (1 - tick / Math.max(1, screen.seconds - 1)) : 0;
+        points.push({
+          mb: memory,
+          cpu: Math.min(96, Math.max(1.4, spike + 9.5 + (rand() - 0.5) * 8)),
+          fps: spike > 40 ? 44 + (rand() - 0.5) * 14 : 59 + (rand() - 0.5) * 3,
+          threads: Math.round(41 + index * 5.4 + tick * 0.08),
+          screen: screen.name,
+          band: index,
+        });
       }
     });
     return points;
@@ -44,6 +52,117 @@
   const MIN = Math.min(...POINTS.map((p) => p.mb));
   const MAX = Math.max(...POINTS.map((p) => p.mb));
   const AVG = POINTS.reduce((sum, p) => sum + p.mb, 0) / POINTS.length;
+
+  /* ── the hero rig: a phone wired into a live readout ──────────────────── */
+
+  const PLATFORMS = {
+    android: {
+      label: "Android",
+      device: "Pixel 9 Pro",
+      serial: "39021FDJH00TK9",
+      foot: "Sampling every second over adb. Switch the platform — what it can read changes with it.",
+      reads: { mem: true, cpu: true, fps: true, threads: true },
+    },
+    simulator: {
+      label: "iOS Simulator",
+      device: "iPhone 17 Pro",
+      serial: "3CFEE594-803A-43A6",
+      foot: "Over simctl. Frame rate is Android-only — the app says so instead of charting a zero.",
+      reads: { mem: true, cpu: true, fps: false, threads: true },
+    },
+    iosDevice: {
+      label: "iPhone",
+      device: "Kuray's iPhone",
+      serial: "00008130-001638A9",
+      foot: "Over pymobiledevice3, wired or wireless. Frame timing needs the Instruments channels.",
+      reads: { mem: true, cpu: true, fps: false, threads: true },
+    },
+  };
+
+  const SERIES = {
+    mem: (p) => p.mb,
+    cpu: (p) => p.cpu,
+    fps: (p) => p.fps,
+    threads: (p) => p.threads,
+  };
+
+  const DECIMALS = { mem: 1, cpu: 1, fps: 0, threads: 0 };
+
+  function rigStage(section) {
+    const tiles = $$("[data-rig-metric]", section);
+    const screen = $("[data-rig-screen]", section);
+    const foot = $("[data-rig-foot]", section);
+    let platform = "android";
+    let index = 40;
+
+    const paint = () => {
+      const spec = PLATFORMS[platform];
+      const window = POINTS.slice(Math.max(0, index - 44), index + 1);
+      screen.textContent = POINTS[index].screen;
+      tiles.forEach((tile) => {
+        const key = tile.dataset.rigMetric;
+        const value = $("[data-rig-value]", tile);
+        const spark = $("[data-rig-spark]", tile);
+        if (!spec.reads[key]) {
+          tile.classList.add("off");
+          value.textContent = key === "fps" ? "Android only" : "—";
+          return;
+        }
+        tile.classList.remove("off");
+        const numbers = window.map(SERIES[key]);
+        value.textContent = numbers[numbers.length - 1].toFixed(DECIMALS[key]);
+        const low = Math.min(...numbers);
+        const high = Math.max(...numbers);
+        const span = Math.max(1, high - low);
+        spark.setAttribute(
+          "d",
+          numbers
+            .map((n, i) => {
+              const x = (i / Math.max(1, numbers.length - 1)) * 120;
+              const y = 31 - ((n - low) / span) * 28;
+              return `${i ? "L" : "M"}${x.toFixed(1)} ${y.toFixed(1)}`;
+            })
+            .join(" ")
+        );
+      });
+      foot.textContent = spec.foot;
+      $("[data-rig-device]", section).textContent = spec.device;
+      $("[data-rig-serial]", section).textContent = spec.serial;
+    };
+
+    $$("[data-rig-platform]", section).forEach((button) => {
+      button.addEventListener("click", () => {
+        platform = button.dataset.rigPlatform;
+        $$("[data-rig-platform]", section).forEach((other) =>
+          other.classList.toggle("on", other === button)
+        );
+        paint();
+      });
+    });
+
+    paint();
+    if (STATIC || REDUCED) return;
+
+    let timer = null;
+    const tick = () => {
+      index = (index + 1) % POINTS.length;
+      if (index < 40) index = 40;
+      paint();
+    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !timer) timer = setInterval(tick, 420);
+          else if (!entry.isIntersecting && timer) {
+            clearInterval(timer);
+            timer = null;
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(section);
+  }
 
   /* ── stage one: the chart ─────────────────────────────────────────────── */
 
@@ -378,6 +497,7 @@
   }
 
   const boot = () => {
+    $$('[data-stage="rig"]').forEach(rigStage);
     $$('[data-stage="chart"]').forEach(chartStage);
     $$('[data-stage="terminal"]').forEach(terminalStage);
     copyButtons();
