@@ -6,10 +6,10 @@
     <description>Updates for Device Performance Monitor — live memory, CPU, thread and frame-rate monitoring from Coursion.</description>
     <language>en</language>
     <item>
-      <title>Version 1.8.0</title>
-      <pubDate>Thu, 12 Nov 2026 21:23:44 +0300</pubDate>
-      <sparkle:version>30</sparkle:version>
-      <sparkle:shortVersionString>1.8.0</sparkle:shortVersionString>
+      <title>Version 1.8.1</title>
+      <pubDate>Thu, 12 Nov 2026 22:33:14 +0300</pubDate>
+      <sparkle:version>31</sparkle:version>
+      <sparkle:shortVersionString>1.8.1</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
       <description><![CDATA[<!DOCTYPE html><html><head><meta charset='utf-8'><style>
   :root { color-scheme: light dark; }
@@ -54,25 +54,11 @@
     ul.feats li strong { color: #a99dff; }
     code { background: rgba(255,255,255,.10); }
   }
-</style></head><body><span class="badge">Version 1.8.0</span><h1 class="title">A quieter window, and a tour</h1><p>The monitor&#x27;s toolbar was eleven controls fighting for one row. This release calms the window down, gives every sheet and panel the same chrome, and brings back a proper What&#x27;s New tour.</p>
-<h5>A calmer toolbar</h5>
+</style></head><body><span class="badge">Version 1.8.1</span><h1 class="title">Tidier release notes</h1><p>A maintenance release: the update dialog now shows the notes the way they were written.</p>
 <ul class="feats">
-<li><strong>One button runs the session</strong> — Start and Stop are the same control now, because only one of them is ever available. Return still starts it.</li>
-<li><strong>The rest moved into a menu</strong> — Reset session, the cache release test, past sessions and Settings live behind ⋯, leaving Marker and Export where your hand expects them.</li>
-<li><strong>Status reads in one line</strong> — The screen under test, the last update and the Live pill now sit on one strip beside the app name instead of three ragged lines.</li>
-</ul>
-<h5>Every window is ours</h5>
-<ul class="feats">
-<li><strong>Close, minimise and zoom, drawn by the app</strong> — The window buttons match the rest of the app and still do exactly what they always did.</li>
-<li><strong>One shell for every sheet</strong> — Past sessions, the AI report, the cache release test and the pickers share a header, a close button and a footer, so they stop drifting apart.</li>
-<li><strong>Save panels say what they are saving</strong> — Exporting tells you how many readings of which app are about to be written, without replacing Finder&#x27;s own panel.</li>
-</ul>
-<h5>The tour is back</h5>
-<ul class="feats">
-<li><strong>What&#x27;s New, rebuilt</strong> — A paged tour with a colour per section, built from this changelog, shown once after an update and reopenable from the app menu.</li>
-<li><strong>Demo mode for a devices-free look</strong> — Launch with <code>DPM_DEMO=dashboard</code> and the charts fill with a realistic session, so the window can be shown without hardware attached.</li>
+<li><strong>Release notes read like release notes</strong> — The notes Sparkle shows no longer print the icon names and tags the in-app tour reads from the changelog.</li>
 </ul></body></html>]]></description>
-      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.8.0/DevicePerformanceMonitor-1.8.0.dmg" type="application/octet-stream" sparkle:edSignature="WXA7TsyagVQNorU5BN11orFFfIgCpk2pkxvoxgsdRkGMPeasW1iueWqQUx2Gb4pJJfBjd5M0OL3rkAzY9DBsCQ==" length="39662371" />
+      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.8.1/DevicePerformanceMonitor-1.8.1.dmg" type="application/octet-stream" sparkle:edSignature="7yAMzoINEC5mlri4qLulpyz0KGgI0XeN1L6QEXBXBbAHDV96DldgE459aAyFRBuyyDpmqRF2DuSYssV/LsEtDQ==" length="39662530" />
     </item>
   </channel>
 </rss>
