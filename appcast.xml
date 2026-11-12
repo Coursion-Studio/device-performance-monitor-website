@@ -6,10 +6,10 @@
     <description>Updates for Device Performance Monitor — live memory, CPU, thread and frame-rate monitoring from Coursion.</description>
     <language>en</language>
     <item>
-      <title>Version 1.7.0</title>
-      <pubDate>Wed, 14 Oct 2026 00:37:31 +0300</pubDate>
-      <sparkle:version>29</sparkle:version>
-      <sparkle:shortVersionString>1.7.0</sparkle:shortVersionString>
+      <title>Version 1.8.0</title>
+      <pubDate>Thu, 12 Nov 2026 21:21:59 +0300</pubDate>
+      <sparkle:version>30</sparkle:version>
+      <sparkle:shortVersionString>1.8.0</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
       <description><![CDATA[<!DOCTYPE html><html><head><meta charset='utf-8'><style>
   :root { color-scheme: light dark; }
@@ -54,14 +54,25 @@
     ul.feats li strong { color: #a99dff; }
     code { background: rgba(255,255,255,.10); }
   }
-</style></head><body><span class="badge">Version 1.7.0</span><h1 class="title">CLI &amp; AI agents, filled in for your app</h1><ul class="feats">
-<li><strong>Pick your device once</strong> — The page now opens on a device and app picker, and every example, prompt and CI snippet fills itself in with them. What you copy runs as-is, no placeholder to swap.</li>
-<li><strong>Agents first</strong> — The prompts moved to the top of the page and now name your real package. A new button copies — or saves — the whole command reference as <code>AGENTS.md</code>, so your repo&#x27;s agent needs no prompt at all.</li>
-<li><strong>Run it without leaving</strong> — <code>dpm devices</code> and <code>dpm apps</code> run right in the page and show their output and exit code; any example opens in Terminal with one click.</li>
-<li><strong><code>dpm docs</code></strong> — A new command prints the full reference as markdown or JSON, for an agent to read or a docs site to build from.</li>
-<li><strong>Renamed</strong> — Settings → <strong>CLI &amp; AI agents</strong>, because it is as much about the agent as the terminal.</li>
+</style></head><body><span class="badge">Version 1.8.0</span><h1 class="title">A quieter window, and a tour</h1><p>The monitor&#x27;s toolbar was eleven controls fighting for one row. This release calms the window down, gives every sheet and panel the same chrome, and brings back a proper What&#x27;s New tour.</p>
+<h5>A calmer toolbar</h5>
+<ul class="feats">
+<li><strong>One button runs the session</strong> <code>play.fill</code> — Start and Stop are the same control now, because only one of them is ever available. Return still starts it.</li>
+<li><strong>The rest moved into a menu</strong> <code>ellipsis.circle</code> — Reset session, the cache release test, past sessions and Settings live behind ⋯, leaving Marker and Export where your hand expects them. {monitor}</li>
+<li><strong>Status reads in one line</strong> <code>waveform.path.ecg</code> — The screen under test, the last update and the Live pill now sit on one strip beside the app name instead of three ragged lines. {monitor}</li>
+</ul>
+<h5>Every window is ours</h5>
+<ul class="feats">
+<li><strong>Close, minimise and zoom, drawn by the app</strong> <code>macwindow</code> — The window buttons match the rest of the app and still do exactly what they always did. {window}</li>
+<li><strong>One shell for every sheet</strong> <code>rectangle.on.rectangle</code> — Past sessions, the AI report, the cache release test and the pickers share a header, a close button and a footer, so they stop drifting apart. {window}</li>
+<li><strong>Save panels say what they are saving</strong> <code>square.and.arrow.down</code> — Exporting tells you how many readings of which app are about to be written, without replacing Finder&#x27;s own panel. {export}</li>
+</ul>
+<h5>The tour is back</h5>
+<ul class="feats">
+<li><strong>What&#x27;s New, rebuilt</strong> <code>sparkles</code> — A paged tour with a colour per section, built from this changelog, shown once after an update and reopenable from the app menu. {tools}</li>
+<li><strong>Demo mode for a devices-free look</strong> <code>iphone.gen3</code> — Launch with <code>DPM_DEMO=dashboard</code> and the charts fill with a realistic session, so the window can be shown without hardware attached. {monitor}</li>
 </ul></body></html>]]></description>
-      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.7.0/DevicePerformanceMonitor-1.7.0.dmg" type="application/octet-stream" sparkle:edSignature="bx4Q5y4+fvArmnVjEUkhZfp4dvfXirhBn48jH1mDpWxhj2cpdUmPYbGYtecVF+8ZOBgF+lb8/pREp5Giw3KlAA==" length="39071649" />
+      <enclosure url="https://github.com/Coursion-Studio/device-performance-monitor-website/releases/download/v1.8.0/DevicePerformanceMonitor-1.8.0.dmg" type="application/octet-stream" sparkle:edSignature="WXA7TsyagVQNorU5BN11orFFfIgCpk2pkxvoxgsdRkGMPeasW1iueWqQUx2Gb4pJJfBjd5M0OL3rkAzY9DBsCQ==" length="39662371" />
     </item>
   </channel>
 </rss>
